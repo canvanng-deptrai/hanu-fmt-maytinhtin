@@ -1,0 +1,2280 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta name="google-site-verification" content="igoBC9rRhd4ypHzc0qqxL6NoQZfp3NgMOP5vkROdxCk" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Máy tính tín chỉ · Khoa FMT · HANU</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F2E8;
+    --paper-2:#EFE9DA;
+    --ink:#1E2A44;
+    --ink-soft:#5B6478;
+    --rule:#DBD3BF;
+    --brass:#B8894F;
+    --brass-dark:#8C6435;
+    --sage:#5B7F5E;
+    --sage-bg:#E4ECE1;
+    --coral:#B0552F;
+    --coral-bg:#F3E4D8;
+    --gray:#5C6270;
+    --gray-bg:#E6E6E9;
+    --yellow:#A8790C;
+    --yellow-bg:#F5E7BE;
+    --blue:#3C6690;
+    --blue-bg:#DCE6EF;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{
+    max-width:1100px;
+    margin:0 auto;
+    padding:2.5rem 1.5rem 6rem;
+  }
+
+  /* ---------- shared header bits ---------- */
+  header.top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:1rem;
+    border-bottom:1.5px solid var(--ink);
+    padding-bottom:1.25rem;
+    margin-bottom:2rem;
+    flex-wrap:wrap;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--brass-dark);
+    margin:0 0 6px;
+  }
+  h1{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:32px;
+    margin:0;
+    line-height:1.1;
+  }
+  .sub{
+    font-size:13px;
+    color:var(--ink-soft);
+    margin:6px 0 0;
+    max-width:520px;
+  }
+  .btn{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    background:none;
+    border:1px solid var(--ink);
+    color:var(--ink);
+    padding:8px 14px;
+    cursor:pointer;
+    border-radius:2px;
+    transition:background 0.15s,color 0.15s;
+    white-space:nowrap;
+  }
+  .btn:hover{background:var(--ink);color:var(--paper);}
+  .btn-ghost{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    background:none;
+    border:none;
+    color:var(--ink-soft);
+    cursor:pointer;
+    padding:6px 0;
+    text-align:left;
+  }
+  .btn-ghost:hover{color:var(--ink);}
+
+  /* ---------- landing screen ---------- */
+  .landing-warning{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    background:var(--coral-bg);
+    border:1px solid #E2C1A6;
+    border-radius:10px;
+    padding:1rem 1.1rem;
+    margin-bottom:2rem;
+    font-size:13px;
+    line-height:1.55;
+    color:#7A3D1F;
+  }
+  .landing-warning .mark{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:16px;
+    flex-shrink:0;
+    width:22px;height:22px;
+    border-radius:50%;
+    border:1.5px solid #7A3D1F;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .landing-warning b{font-weight:600;}
+
+  .landing-intro{margin-bottom:2rem;}
+  .landing-intro h2{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:18px;
+    margin:0 0 6px;
+  }
+  .landing-intro p{
+    font-size:13.5px;
+    color:var(--ink-soft);
+    margin:0;
+    max-width:640px;
+    line-height:1.6;
+  }
+
+  .major-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+    gap:1rem;
+  }
+  .major-card{
+    background:#fff;
+    border:1px solid var(--rule);
+    border-radius:12px;
+    padding:1.25rem 1.25rem 1.4rem;
+    cursor:pointer;
+    text-align:left;
+    transition:border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    font-family:inherit;
+  }
+  .major-card:hover{
+    border-color:var(--brass);
+    transform:translateY(-2px);
+    box-shadow:0 6px 18px rgba(30,42,68,0.08);
+  }
+  .major-card .m-idx{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--brass-dark);
+  }
+  .major-card .m-title{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:19px;
+    line-height:1.25;
+    color:var(--ink);
+  }
+  .major-card .m-en{
+    font-size:12px;
+    color:var(--ink-soft);
+    font-style:italic;
+  }
+  .major-card .m-meta{
+    margin-top:auto;
+    padding-top:10px;
+    border-top:1px solid var(--rule);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--ink-soft);
+    display:flex;
+    justify-content:space-between;
+  }
+
+  footer{
+    text-align:center;
+    font-size:11px;
+    color:var(--ink-soft);
+    margin-top:2rem;
+    font-family:'IBM Plex Mono',monospace;
+  }
+
+  /* ---------- calculator screen ---------- */
+  .layout{
+    display:grid;
+    grid-template-columns:280px 1fr;
+    gap:2.5rem;
+    align-items:start;
+  }
+  @media (max-width:820px){
+    .layout{grid-template-columns:1fr;}
+    .major-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:520px){
+    .major-grid{grid-template-columns:1fr;}
+  }
+
+  .header-actions{display:flex;gap:10px;align-items:center;}
+
+  .stamp-col{
+    position:sticky;
+    top:1.5rem;
+    display:flex;
+    flex-direction:column;
+    gap:1.5rem;
+  }
+  @media (max-width:820px){ .stamp-col{position:static;} }
+
+  .seal{
+    background:var(--paper-2);
+    border:1px solid var(--rule);
+    border-radius:12px;
+    padding:1.5rem;
+    text-align:center;
+  }
+  .seal svg{width:150px;height:150px;}
+  .seal .pct-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-top:2px;
+  }
+  .seal .figures{
+    margin-top:1rem;
+    padding-top:1rem;
+    border-top:1px solid var(--rule);
+    display:flex;
+    justify-content:space-around;
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .seal .figures div span{display:block;}
+  .seal .figures .num{font-size:18px;color:var(--ink);}
+  .seal .figures .lbl{font-size:10px;color:var(--ink-soft);margin-top:2px;}
+
+  .mini-list{
+    background:var(--paper-2);
+    border:1px solid var(--rule);
+    border-radius:12px;
+    padding:1.25rem 1.25rem 1.25rem;
+  }
+  .mini-list h3{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin:0 0 12px;
+    font-weight:500;
+  }
+  .mini-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:12.5px;
+    padding:6px 0;
+    border-top:1px solid var(--rule);
+    cursor:pointer;
+  }
+  .mini-row:first-of-type{border-top:none;}
+  .mini-row .bar-bg{
+    flex:1;
+    height:4px;
+    background:var(--rule);
+    border-radius:2px;
+    margin:0 10px;
+    overflow:hidden;
+  }
+  .mini-row .bar-fill{height:100%;background:var(--brass);border-radius:2px;}
+  .mini-row.done .bar-fill{background:var(--sage);}
+  .mini-row .name{flex-shrink:0;width:92px;color:var(--ink);}
+  .mini-row .figs{font-family:'IBM Plex Mono',monospace;flex-shrink:0;color:var(--ink-soft);}
+
+  .cat{
+    background:#fff;
+    border:1px solid var(--rule);
+    border-radius:12px;
+    margin-bottom:1.25rem;
+    overflow:hidden;
+  }
+  .cat-head{
+    display:flex;
+    align-items:center;
+    gap:1rem;
+    padding:1rem 1.25rem;
+    background:var(--paper-2);
+    border-bottom:1px solid var(--rule);
+    cursor:pointer;
+  }
+  .cat-head .idx{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--brass-dark);
+    width:18px;
+  }
+  .cat-head .title{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:17px;
+    flex:1;
+  }
+  .cat-head .target-note{
+    font-size:11.5px;
+    color:var(--ink-soft);
+    display:block;
+    font-family:'Inter',sans-serif;
+    font-weight:400;
+    margin-top:2px;
+  }
+  .cat-head .credits{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:14px;
+    text-align:right;
+  }
+  .cat-head .credits .rem{font-size:10.5px;color:var(--ink-soft);display:block;margin-top:2px;}
+  .cat-head .chev{color:var(--ink-soft);transition:transform 0.15s;font-size:12px;}
+  .cat.collapsed .chev{transform:rotate(-90deg);}
+  .cat-head-bar{height:3px;background:var(--rule);}
+  .cat-head-bar .fill{height:100%;background:var(--brass);transition:width 0.25s;}
+
+  /* ---------- màu theo nhóm môn ---------- */
+  /* foundation: giữ nguyên màu cũ (không đổi) */
+  .cat.cat-coreGeneral .cat-head{background:var(--gray-bg);border-left:4px solid var(--gray);}
+  .cat.cat-coreGeneral .cat-head .idx{color:var(--gray);}
+  .cat.cat-coreGeneral .cat-head-bar .fill{background:var(--gray);}
+  .cat.cat-coreGeneral .course-row .cr{color:var(--gray);border-color:var(--gray);}
+
+  .cat.cat-electiveGeneral .cat-head{background:var(--yellow-bg);border-left:4px solid var(--yellow);}
+  .cat.cat-electiveGeneral .cat-head .idx{color:var(--yellow);}
+  .cat.cat-electiveGeneral .cat-head-bar .fill{background:var(--yellow);}
+  .cat.cat-electiveGeneral .course-row .cr{color:var(--yellow);border-color:var(--yellow);}
+
+  .cat.cat-coreMajor .cat-head{background:var(--coral-bg);border-left:4px solid var(--coral);}
+  .cat.cat-coreMajor .cat-head .idx{color:var(--coral);}
+  .cat.cat-coreMajor .cat-head-bar .fill{background:var(--coral);}
+  .cat.cat-coreMajor .course-row .cr{color:var(--coral);border-color:var(--coral);}
+
+  .cat.cat-electiveMajor .cat-head{background:var(--sage-bg);border-left:4px solid var(--sage);}
+  .cat.cat-electiveMajor .cat-head .idx{color:var(--sage);}
+  .cat.cat-electiveMajor .cat-head-bar .fill{background:var(--sage);}
+  .cat.cat-electiveMajor .course-row .cr{color:var(--sage);border-color:var(--sage);}
+
+  .cat.cat-electiveOther .cat-head{background:var(--blue-bg);border-left:4px solid var(--blue);}
+  .cat.cat-electiveOther .cat-head .idx{color:var(--blue);}
+  .cat.cat-electiveOther .cat-head-bar .fill{background:var(--blue);}
+  .cat.cat-electiveOther .course-row .cr{color:var(--blue);border-color:var(--blue);}
+
+  .cat.cat-intern .cat-head{background:var(--coral-bg);border-left:4px solid var(--coral);}
+  .cat.cat-intern .cat-head .idx{color:var(--coral);}
+  .cat.cat-intern .cat-head-bar .fill{background:var(--coral);}
+  .cat.cat-intern .course-row .cr{color:var(--coral);border-color:var(--coral);}
+
+  /* trạng thái "đủ tín" luôn hiện màu xanh lá, ghi đè màu nhóm ở thanh tiến độ */
+  .cat.done .cat-head-bar .fill{background:var(--sage);}
+
+  /* mini-list theo nhóm cũng ăn theo màu nhóm */
+  .mini-row.cat-coreGeneral .bar-fill{background:var(--gray);}
+  .mini-row.cat-electiveGeneral .bar-fill{background:var(--yellow);}
+  .mini-row.cat-coreMajor .bar-fill{background:var(--coral);}
+  .mini-row.cat-electiveMajor .bar-fill{background:var(--sage);}
+  .mini-row.cat-electiveOther .bar-fill{background:var(--blue);}
+  .mini-row.cat-intern .bar-fill{background:var(--coral);}
+  .mini-row.done .bar-fill{background:var(--sage);}
+
+  .cat-body{padding:0.5rem 0.25rem;}
+  .cat.collapsed .cat-body{display:none;}
+
+  .override{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:0.65rem 1rem;
+    margin:0.25rem 0.75rem 0.5rem;
+    background:var(--paper);
+    border:1px dashed var(--rule);
+    border-radius:8px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+  }
+  .override input{
+    width:60px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    border:1px solid var(--rule);
+    border-radius:4px;
+    padding:4px 6px;
+    background:#fff;
+    color:var(--ink);
+  }
+  .override input:focus{outline:1.5px solid var(--brass);}
+
+  .course-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:9px 1rem;
+    border-top:1px solid var(--rule);
+    font-size:13.5px;
+  }
+  .course-row:first-of-type{border-top:none;}
+  .course-row input[type=checkbox]{
+    width:16px;height:16px;
+    accent-color:var(--brass-dark);
+    flex-shrink:0;
+    cursor:pointer;
+  }
+  .course-row .code{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--ink-soft);
+    width:78px;
+    flex-shrink:0;
+  }
+  .course-row .name{flex:1;line-height:1.4;}
+  .course-row.checked .name{color:var(--ink-soft);text-decoration:line-through;text-decoration-color:var(--rule);}
+  .course-row .cr{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    color:var(--brass-dark);
+    border:1px solid var(--rule);
+    border-radius:4px;
+    padding:2px 6px;
+    flex-shrink:0;
+  }
+  .subgroup-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    padding:10px 1rem 4px;
+  }
+
+  .thesis-block{
+    background:var(--coral-bg);
+    border:1px solid var(--rule);
+    border-left:4px solid var(--coral);
+    border-radius:12px;
+    padding:1.1rem 1.25rem;
+    margin-bottom:1.25rem;
+    font-size:13.5px;
+  }
+  .thesis-block .th-head{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:'Fraunces',serif;
+    font-size:16px;
+    font-weight:500;
+  }
+  .thesis-block .th-head input{width:16px;height:16px;accent-color:var(--brass-dark);}
+  .thesis-block p{color:var(--ink-soft);margin:8px 0 0;line-height:1.5;}
+
+  .hidden{display:none !important;}
+
+  /* ---------- extra: breadcrumb + year tabs ---------- */
+  .crumb{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.05em;
+    color:var(--ink-soft);
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:0;
+    text-decoration:underline;
+    text-underline-offset:2px;
+  }
+  .crumb:hover{color:var(--ink);}
+  .crumb-sep{color:var(--rule);margin:0 6px;}
+
+  .year-tabs{
+    display:flex;
+    gap:8px;
+    margin-bottom:0.6rem;
+    flex-wrap:wrap;
+  }
+  .year-tab{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.04em;
+    background:#fff;
+    border:1px solid var(--rule);
+    border-radius:999px;
+    padding:9px 18px;
+    cursor:pointer;
+    color:var(--ink-soft);
+    transition:border-color 0.15s, color 0.15s, background 0.15s;
+  }
+  .year-tab .yt-label{
+    font-family:'Fraunces',serif;
+    font-size:14px;
+    color:var(--ink);
+    margin-right:6px;
+  }
+  .year-tab:hover{border-color:var(--brass);}
+  .year-tab.active{
+    background:var(--ink);
+    border-color:var(--ink);
+    color:var(--paper);
+  }
+  .year-tab.active .yt-label{color:var(--paper);}
+  .year-tab-sub{margin-bottom:1.5rem;}
+</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7396697137203895"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ LANDING SCREEN (chọn khoá + ngành cùng lúc) ============ -->
+  <div id="landingScreen">
+    <header class="top">
+      <div>
+        <p class="eyebrow">HANU · Khoa Quản trị Kinh doanh &amp; Du lịch (FMT)</p>
+        <h1>Máy tính tín chỉ</h1>
+        <p class="sub">Công cụ tra cứu tiến độ tích luỹ tín chỉ theo chương trình khung của Khoa FMT.</p>
+      </div>
+    </header>
+
+    <div class="landing-warning">
+      <span class="mark">!</span>
+      <div>
+        <b>Lưu ý:</b> công cụ này chỉ dùng cho sinh viên <b>Khoa Quản trị Kinh doanh và Du lịch (FMT)</b>, dựa theo FMT Student Handbook của từng khoá. Các khoa/ngành khác của Trường Đại học Hà Nội không áp dụng chương trình khung này. Đây không phải kênh thông tin chính thức của Khoa — vui lòng đối chiếu với sổ tay sinh viên hoặc cố vấn học tập.
+      </div>
+    </div>
+
+    <div class="landing-intro">
+      <h2>Bạn thuộc khoá và ngành nào?</h2>
+      <p>Chọn khoá tuyển sinh, sau đó chọn đúng ngành đang theo học để vào máy tính tín chỉ tương ứng — mỗi khoá/ngành có chương trình khung, tín chỉ và học phần tự chọn khác nhau.</p>
+    </div>
+
+    <div class="year-tabs" id="yearTabs"></div>
+    <p class="sub year-tab-sub" id="landingSub"></p>
+
+    <div class="major-grid" id="majorGrid"></div>
+
+    <footer>Dữ liệu lưu riêng cho bạn trên trình duyệt này · Không phải kênh thông tin chính thức của Khoa</footer>
+  </div>
+
+  <!-- ============ CALCULATOR SCREEN ============ -->
+  <div id="calcScreen" class="hidden">
+    <header class="top">
+      <div>
+        <p class="eyebrow" id="calcEyebrow">HANU · Ngành ...</p>
+        <h1 id="calcTitle">Máy tính tín chỉ</h1>
+        <p class="sub">Tick môn đã học, hoặc nhập số tín quy đổi — kết quả cập nhật ngay.</p>
+        <p class="sub"><button class="crumb" id="backToLandingBtn">← Đổi khoá / ngành</button></p>
+      </div>
+      <div class="header-actions">
+        <button class="btn" id="resetBtn">Xoá tiến độ</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <div class="stamp-col">
+        <div class="seal">
+          <svg viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="52" fill="none" stroke="#DBD3BF" stroke-width="8"/>
+            <circle id="sealRing" cx="60" cy="60" r="52" fill="none" stroke="#B8894F" stroke-width="8" stroke-linecap="round" transform="rotate(-90 60 60)"/>
+            <text x="60" y="64" text-anchor="middle" font-family="Fraunces, serif" font-size="26" font-weight="500" fill="#1E2A44" id="sealPct">0%</text>
+          </svg>
+          <p class="pct-label">Tiến độ tích luỹ</p>
+          <div class="figures">
+            <div><span class="num" id="figEarned">0</span><span class="lbl">Đã có</span></div>
+            <div><span class="num" id="figTarget">0</span><span class="lbl">Cần có</span></div>
+            <div><span class="num" id="figLeft">0</span><span class="lbl">Còn thiếu</span></div>
+          </div>
+        </div>
+
+        <div class="mini-list" id="miniList">
+          <h3>Theo nhóm</h3>
+        </div>
+      </div>
+
+      <div class="cats" id="catsContainer"></div>
+    </div>
+
+    <footer>Dữ liệu lưu riêng cho bạn trên trình duyệt này</footer>
+  </div>
+
+</div>
+
+<script>
+/* ======================================================================
+   DỮ LIỆU CHƯƠNG TRÌNH KHUNG — Khoa FMT, HANU
+   K23: theo FMT Student Handbook 2024
+   K24: theo FMT Student Handbook 2025 (mục 2.6)
+   ====================================================================== */
+
+/* ---------- shared helpers ---------- */
+function mk(prefix, list, cat, group){
+  return list.map((c,i)=>({id:prefix+'_'+cat+'_'+c[0]+'_'+i, code:c[0], name:c[1], credit:c[2], cat:cat, group:group||undefined}));
+}
+
+/* ======================= K23 FOUNDATION HELPER ======================= */
+function foundationCoursesK23(prefix, codePrefix, withCulture){
+  const base = [
+    {code:codePrefix+'PML1PML',name:'Triết học Mác - Lê-nin',credit:3},
+    {code:codePrefix+'PML1POE',name:'Kinh tế chính trị Mác - Lê-nin',credit:2},
+    {code:codePrefix+'PML2SCS',name:'Chủ nghĩa xã hội khoa học',credit:2},
+    {code:codePrefix+'PML2HVC',name:'Lịch sử Đảng Cộng sản Việt Nam',credit:2},
+    {code:codePrefix+'PML3HCM',name:'Tư tưởng Hồ Chí Minh',credit:2},
+    {code:codePrefix+'PML2GEL',name:'Pháp luật đại cương',credit:2},
+    {code:codePrefix+'INT1CSK',name:'Ứng dụng công nghệ thông tin',credit:3},
+    {code:codePrefix+'ESP11A2',name:'Thực hành tiếng A2',credit:14},
+    {code:codePrefix+'ESP11B1',name:'Thực hành tiếng B1',credit:14},
+    {code:codePrefix+'ESP11B2',name:'Thực hành tiếng B2',credit:14},
+    {code:codePrefix+'PED1PED',name:'Giáo dục thể chất 1',credit:1},
+    {code:codePrefix+'PED1PED',name:'Giáo dục thể chất 2',credit:1},
+    {code:codePrefix+'PED1PED',name:'Giáo dục thể chất 3',credit:1},
+    {code:codePrefix+'NDE1NDS',name:'Giáo dục Quốc phòng – An ninh',credit:8},
+  ];
+  if(withCulture){
+    base.splice(6,0,{code:codePrefix+'VIP2BHC',name:'Lược sử văn hoá Việt Nam',credit:3});
+  }
+  return base.map((c,i)=>({id:prefix+'_f'+i, code:c.code, name:c.name, credit:c.credit, cat:'foundation'}));
+}
+
+/* ======================= K24 FOUNDATION HELPER ======================= */
+/* culture: null (không có), hoặc {code,name,credit} — VIP2BHC (3 tín, Tourism/Tourism-TT) hoặc VIP1IVC (2 tín, Marketing) */
+function foundationCoursesK24(prefix, codePrefix, culture){
+  const base = [
+    {code:codePrefix+'PML1PML',name:'Triết học Mác - Lê-nin',credit:3},
+    {code:codePrefix+'PML1POE',name:'Kinh tế chính trị Mác - Lê-nin',credit:2},
+    {code:codePrefix+'PML2SCS',name:'Chủ nghĩa xã hội khoa học',credit:2},
+    {code:codePrefix+'PML2HVC',name:'Lịch sử Đảng Cộng sản Việt Nam',credit:2},
+    {code:codePrefix+'PML3HCM',name:'Tư tưởng Hồ Chí Minh',credit:2},
+    {code:codePrefix+'PML2GEL',name:'Pháp luật đại cương',credit:2},
+    {code:codePrefix+'INT1CSK',name:'Ứng dụng công nghệ thông tin',credit:3},
+    {code:codePrefix+'ESP11B1A',name:'Thực hành tiếng B1',credit:18},
+    {code:codePrefix+'ESP11B2A',name:'Thực hành tiếng B2',credit:18},
+    {code:codePrefix+'PED1PED',name:'Giáo dục thể chất',credit:3},
+    {code:codePrefix+'NDE1NDS',name:'Giáo dục Quốc phòng – An ninh',credit:8},
+  ];
+  if(culture){
+    base.splice(6,0,culture);
+  }
+  return base.map((c,i)=>({id:prefix+'_f'+i, code:c.code, name:c.name, credit:c.credit, cat:'foundation'}));
+}
+
+const YEARS = {};
+
+/* =====================================================================
+   ================================ K23 ================================
+   ===================================================================== */
+(function(){
+const MAJORS = {};
+
+/* ---------------------------------------------------------------------
+   1) NGÀNH QUẢN TRỊ DỊCH VỤ DU LỊCH VÀ LỮ HÀNH
+--------------------------------------------------------------------- */
+(function(){
+  const p='dl';
+  const CATS=[
+    {key:'foundation', label:'Foundation', target:72},
+    {key:'coreGeneral', label:'Core general', target:21},
+    {key:'electiveGeneral', label:'Elective general', target:6},
+    {key:'coreMajor', label:'Core major', target:21},
+    {key:'electiveMajor', label:'Elective major', target:15, targetThesis:12},
+    {key:'electiveOther', label:'Elective other', target:12, targetThesis:6},
+    {key:'intern', label:'Thực tập tốt nghiệp', target:3},
+  ];
+  let COURSES=[];
+  COURSES=COURSES.concat(foundationCoursesK23(p,'61',true));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MAT2CEB','Toán cao cấp và ứng dụng trong Kinh tế - Kinh doanh',3],
+    ['61STA2PAS','Xác suất thống kê',3],
+    ['61ECO2MIC','Kinh tế vi mô',3],
+    ['61ECO2MAC','Kinh tế vĩ mô',3],
+    ['61MGT2ITM','Quản trị học',3],
+    ['61MKT2PMK','Nguyên lý Marketing',3],
+    ['61STA2RMB','Phương pháp nghiên cứu trong kinh doanh',3],
+  ],'coreGeneral'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MGT2BUE','Đạo đức kinh doanh',3],
+    ['61ACC2ATH','Kế toán du lịch khách sạn',3],
+    ['61THM3TEC','Kinh tế du lịch',3],
+    ['61MGT3BML','Mô hình kinh doanh',3],
+    ['61MGT2SUS','Bền vững trong kinh doanh',3],
+  ],'electiveGeneral'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61THM2ITO','Nhập môn du lịch',3],
+    ['61THM3HMG','Quản trị khách sạn',3],
+    ['61THM3TMG','Quản trị lữ hành',3],
+    ['61THM3TMK','Marketing du lịch',3],
+    ['61THM3TOG','Địa lý du lịch',3],
+    ['61THM3SUT','Du lịch bền vững',3],
+    ['61THM2TOL','Pháp luật du lịch',3],
+  ],'coreMajor'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61THM4TOB','Hành vi khách du lịch',3],
+    ['61THM3EVN','Quản trị sự kiện',3],
+    ['61THM4DMK','Marketing điểm đến',3],
+    ['61THM4TPL','Quy hoạch du lịch',3],
+    ['61THM4ENT','Khởi nghiệp kinh doanh du lịch',3],
+    ['61THM3TPD','Phát triển sản phẩm du lịch',3],
+    ['61THM3OST','Học tập thực địa',3],
+    ['61THM3FBM','Quản trị nhà hàng',3],
+    ['61THM3CRS','Hệ thống đặt giữ chỗ',3],
+    ['61THM3DMT','Marketing kỹ thuật số trong du lịch',3],
+    ['61THM3TPM','Quản trị dự án du lịch',3],
+    ['61MGT3HRM','Quản trị nhân sự',3],
+  ],'electiveMajor'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61THM4TOP','Điều hành tour',3],
+    ['61THM3TRA','Quản lý vận chuyển',3],
+    ['61THM4TGS','Nghiệp vụ hướng dẫn du lịch',3],
+    ['61THM3SIT','Du lịch chuyên đề',3],
+    ['61THM4HET','Du lịch di sản',3],
+    ['61THM4SQM','Quản lý chất lượng dịch vụ',3],
+    ['61THM4REV','Quản lý doanh số',3],
+    ['61THM4RM','Quản trị buồng phòng',3],
+    ['61THM4MIE','Du lịch M.I.C.E',3],
+  ],'electiveOther','Ngành Quản trị DVDL và Lữ hành'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MGT3BCO','Giao tiếp trong kinh doanh',3],
+    ['61MGT3LEO','Lãnh đạo trong doanh nghiệp',3],
+    ['61MGT3IBM','Quản trị kinh doanh quốc tế',3],
+    ['61MGT3OBE','Hành vi tổ chức',3],
+    ['61FIN2FMA','Quản trị tài chính',3],
+    ['61MGT3IOM','Nhập môn vận trù học',3],
+  ],'electiveOther','Ngành Quản trị Kinh doanh'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MKT2SEM','Marketing dịch vụ',3],
+    ['61MKT2DIM','Marketing kỹ thuật số',3],
+    ['61MKT4MRE','Nghiên cứu Marketing',3],
+    ['61MKT3INM','Marketing Quốc tế',3],
+    ['61MKT3BRA','Xây dựng và quản trị thương hiệu',3],
+    ['61MKT4B2B','Marketing Khách hàng doanh nghiệp',3],
+  ],'electiveOther','Ngành Marketing'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61GRA4CAP','Dự án Tốt nghiệp CAPSTONE',6],
+  ],'electiveOther','Dự án tốt nghiệp'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61GRA4INT','Thực tập tốt nghiệp',3],
+  ],'intern'));
+
+  MAJORS['dl'] = {
+    label:'Quản trị Dịch vụ Du lịch và Lữ hành',
+    en:'Tourism and Travel Management',
+    code:'7810103',
+    CATS, COURSES,
+    THESIS:{id:p+'_thesis',code:'61GRA4THE',name:'Khoá luận tốt nghiệp',credit:9}
+  };
+})();
+
+/* ---------------------------------------------------------------------
+   2) NGÀNH KẾ TOÁN
+--------------------------------------------------------------------- */
+(function(){
+  const p='kt';
+  const CATS=[
+    {key:'foundation', label:'Foundation', target:69},
+    {key:'coreGeneral', label:'Core general', target:21},
+    {key:'electiveGeneral', label:'Elective general', target:6},
+    {key:'coreMajor', label:'Core major', target:27},
+    {key:'electiveMajor', label:'Elective major', target:9, targetThesis:6},
+    {key:'electiveOther', label:'Elective other', target:12, targetThesis:6},
+    {key:'intern', label:'Thực tập tốt nghiệp', target:3},
+  ];
+  let COURSES=[];
+  COURSES=COURSES.concat(foundationCoursesK23(p,'61',false));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MAT2CEB','Toán cao cấp và ứng dụng trong Kinh tế - Kinh doanh',3],
+    ['61STA2PAS','Xác suất thống kê',3],
+    ['61ECO2MIC','Kinh tế vi mô',3],
+    ['61ECO2MAC','Kinh tế vĩ mô',3],
+    ['61MGT2ITM','Quản trị học',3],
+    ['61FIN2FMA','Quản trị tài chính',3],
+    ['61LAW2BLW','Luật Kinh tế',3],
+  ],'coreGeneral'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61STA3BES','Thống kê ứng dụng trong kinh doanh và kinh tế',3],
+    ['61MGT2BUE','Đạo đức Kinh doanh',3],
+    ['61STA3ECO','Kinh tế lượng',3],
+    ['61BNK3FMT','Lý thuyết tài chính tiền tệ',3],
+    ['61MKT2PMK','Nguyên lý Marketing',3],
+    ['61STA2RMB','Phương pháp nghiên cứu trong Kinh doanh',3],
+    ['61MGT2SUS','Bền vững trong kinh doanh',3],
+  ],'electiveGeneral'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61ACC2POA','Nguyên lý kế toán',3],
+    ['61ACC2FA1','Kế toán tài chính 1',3],
+    ['61ACC3FA2','Kế toán tài chính 2',3],
+    ['61ACC2MAA','Kế toán quản trị',3],
+    ['61ACC3AUD','Kiểm toán và dịch vụ bảo đảm',3],
+    ['61FIN4FSA','Phân tích báo cáo tài chính',3],
+    ['61ACC4AFA','Kế toán tài chính nâng cao',3],
+    ['61ACC3VEA','Kế toán doanh nghiệp Việt Nam',3],
+    ['61ACC3TAX','Thuế',3],
+  ],'coreMajor'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61ACC2AMA','Kế toán quản trị nâng cao',3],
+    ['61ACC4AFS','Kiểm toán báo cáo tài chính',3],
+    ['61ACC4ASO','Kế toán máy',3],
+    ['61ACC4INA','Kế toán quốc tế',3],
+    ['61ACC4BVA','Phân tích và định giá doanh nghiệp',3],
+    ['61ACC3DAA','Phân tích dữ liệu trong Kế toán',3],
+  ],'electiveMajor'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61ACC3APS','Kế toán công',3],
+    ['61ACC3IAC','Các vấn đề về kế toán đương đại',3],
+    ['61ACC4IAU','Các vấn đề về kiểm toán đương đại',3],
+    ['61ACC3MCS','Hệ thống kiểm soát quản trị',3],
+    ['61ACC3AIS','Hệ thống thông tin kế toán',3],
+  ],'electiveOther','Ngành Kế toán'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61FIN3FMO','Mô hình tài chính',3],
+    ['61FIN3FSY','Hệ thống tài chính',3],
+    ['61FIN3IFI','Tài chính quốc tế',3],
+    ['61BNK3BMA','Quản trị ngân hàng',3],
+    ['61FIN3CFI','Tài chính doanh nghiệp',3],
+    ['61FIN3FIP','Kế hoạch tài chính',3],
+  ],'electiveOther','Ngành Tài chính – Ngân hàng'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MGT3HRM','Quản trị nhân sự',3],
+    ['61MGT3BCO','Giao tiếp trong kinh doanh',3],
+    ['61MGT3LEO','Lãnh đạo trong doanh nghiệp',3],
+    ['61MGT3IBM','Quản trị kinh doanh quốc tế',3],
+    ['61MGT3OBE','Hành vi tổ chức',3],
+  ],'electiveOther','Ngành Quản trị Kinh doanh'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MKT2SEM','Marketing dịch vụ',3],
+    ['61MKT2DIM','Marketing kỹ thuật số',3],
+    ['61MKT3BRA','Xây dựng và quản trị thương hiệu',3],
+  ],'electiveOther','Ngành Marketing'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61GRA4CAP','Dự án Tốt nghiệp CAPSTONE',6],
+    ['61GRA4IFR','Chuẩn mực báo cáo Tài chính Quốc tế (IFRS)',6],
+  ],'electiveOther','Dự án tốt nghiệp'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61GRA4INT','Thực tập tốt nghiệp',3],
+  ],'intern'));
+
+  MAJORS['kt'] = {
+    label:'Kế toán',
+    en:'Accounting',
+    code:'7340101',
+    CATS, COURSES,
+    THESIS:{id:p+'_thesis',code:'61GRA4THE',name:'Khoá luận tốt nghiệp',credit:9}
+  };
+})();
+
+/* ---------------------------------------------------------------------
+   3) NGÀNH QUẢN TRỊ KINH DOANH
+--------------------------------------------------------------------- */
+(function(){
+  const p='qtkd';
+  const CATS=[
+    {key:'foundation', label:'Foundation', target:69},
+    {key:'coreGeneral', label:'Core general', target:21},
+    {key:'electiveGeneral', label:'Elective general', target:6},
+    {key:'coreMajor', label:'Core major', target:21},
+    {key:'electiveMajor', label:'Elective major', target:15, targetThesis:12},
+    {key:'electiveOther', label:'Elective other', target:12, targetThesis:6},
+    {key:'intern', label:'Thực tập tốt nghiệp', target:3},
+  ];
+  let COURSES=[];
+  COURSES=COURSES.concat(foundationCoursesK23(p,'61',false));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MAT2CEB','Toán cao cấp và ứng dụng trong Kinh tế - Kinh doanh',3],
+    ['61STA2PAS','Xác suất thống kê',3],
+    ['61ECO2MIC','Kinh tế vi mô',3],
+    ['61ECO2MAC','Kinh tế vĩ mô',3],
+    ['61ACC2POA','Nguyên lý kế toán',3],
+    ['61FIN2FMA','Quản trị tài chính',3],
+    ['61MKT2PMK','Nguyên lý Marketing',3],
+  ],'coreGeneral'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61STA3BES','Thống kê ứng dụng trong kinh doanh và kinh tế',3],
+    ['61MGT2BUE','Đạo đức Kinh doanh',3],
+    ['61STA3ECO','Kinh tế lượng',3],
+    ['61LAW2BLW','Luật Kinh tế',3],
+    ['61STA2RMB','Phương pháp nghiên cứu trong Kinh doanh',3],
+    ['61MGT2SUS','Bền vững trong kinh doanh',3],
+  ],'electiveGeneral'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MGT2ITM','Quản trị học',3],
+    ['61MGT4SMT','Quản trị chiến lược',3],
+    ['61MGT3HRM','Quản trị nhân sự',3],
+    ['61MGT3OBE','Hành vi tổ chức',3],
+    ['61MGT3IBM','Quản trị kinh doanh quốc tế',3],
+    ['61MGT3IOM','Nhập môn vận trù học',3],
+    ['61MGT3BCO','Giao tiếp trong kinh doanh',3],
+  ],'coreMajor'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MGT3LEO','Lãnh đạo trong doanh nghiệp',3],
+    ['61MGT3SCM','Quản lý chuỗi cung ứng',3],
+    ['61MGT3MIS','Quản lý hệ thống thông tin',3],
+    ['61MGT4ENP','Khởi nghiệp',3],
+    ['61MGT3SHM','Quản trị nhân sự chiến lược',3],
+    ['61MGT3PRM','Quản trị dự án',3],
+    ['61FIN3CFI','Tài chính doanh nghiệp',3],
+    ['61MGT3BML','Mô hình kinh doanh',3],
+    ['61MGT3ORD','Thiết kế tổ chức',3],
+    ['61MGT4SEN','Khởi nghiệp xã hội',3],
+  ],'electiveMajor'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61HRM3TAD','Đào tạo và phát triển nhân viên',3],
+    ['61HRM3CAB','Thù lao và phúc lợi',3],
+    ['61HRM3STA','Tuyển dụng',3],
+    ['61HRM3OLK','Quản trị kiến thức và tổ chức học tập',3],
+    ['61HRM3DMA','Quản trị sự đa dạng',3],
+    ['61HRM3IHR','Quản trị nhân sự quốc tế',3],
+    ['61HRM3QMT','Quản trị chất lượng',3],
+    ['61OPM3PRO','Thu mua',3],
+    ['61OPM3TLM','Hậu cần và vận chuyển',3],
+    ['61OPM3IMT','Quản lý hàng tồn kho',3],
+  ],'electiveOther','Ngành Quản trị Kinh doanh'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MKT2SEM','Marketing dịch vụ',3],
+    ['61MKT2DIM','Marketing kỹ thuật số',3],
+    ['61MKT3BRA','Xây dựng và quản trị thương hiệu',3],
+  ],'electiveOther','Ngành Marketing'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61ACC2FA1','Kế toán Tài chính 1',3],
+    ['61ACC2MAA','Kế toán Quản trị',3],
+    ['61ACC3VEA','Kế toán Doanh nghiệp Việt Nam',3],
+    ['61ACC4FSA','Phân tích Báo cáo tài chính',3],
+  ],'electiveOther','Ngành Kế toán'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61FIN3FMO','Mô hình tài chính',3],
+    ['61FIN3FSY','Hệ thống tài chính',3],
+    ['61FIN3IFI','Tài chính quốc tế',3],
+    ['61BNK3BMA','Quản trị ngân hàng',3],
+    ['61BNK3FMT','Lý thuyết tài chính tiền tệ',3],
+    ['61FIN3FIP','Kế hoạch tài chính',3],
+    ['61BNK4CLM','Đánh giá tín dụng và Quản trị cho vay',3],
+    ['61BNK3TRM','Quản lý nguồn vốn',3],
+  ],'electiveOther','Ngành Tài chính – Ngân hàng'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61GRA4CAP','Dự án Tốt nghiệp CAPSTONE',6],
+  ],'electiveOther','Dự án tốt nghiệp'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61GRA4INT','Thực tập tốt nghiệp',3],
+  ],'intern'));
+
+  MAJORS['qtkd'] = {
+    label:'Quản trị Kinh doanh',
+    en:'Business Administration',
+    code:'7340101',
+    CATS, COURSES,
+    THESIS:{id:p+'_thesis',code:'61GRA4THE',name:'Khoá luận tốt nghiệp',credit:9}
+  };
+})();
+
+/* ---------------------------------------------------------------------
+   4) NGÀNH TÀI CHÍNH - NGÂN HÀNG
+--------------------------------------------------------------------- */
+(function(){
+  const p='tcnh';
+  const CATS=[
+    {key:'foundation', label:'Foundation', target:69},
+    {key:'coreGeneral', label:'Core general', target:21},
+    {key:'electiveGeneral', label:'Elective general', target:6},
+    {key:'coreMajor', label:'Core major', target:21},
+    {key:'electiveMajor', label:'Elective major', target:15, targetThesis:12},
+    {key:'electiveOther', label:'Elective other', target:12, targetThesis:6},
+    {key:'intern', label:'Thực tập tốt nghiệp', target:3},
+  ];
+  let COURSES=[];
+  COURSES=COURSES.concat(foundationCoursesK23(p,'61',false));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MAT2CEB','Toán cao cấp và ứng dụng trong Kinh tế - Kinh doanh',3],
+    ['61STA2PAS','Xác suất và Thống kê',3],
+    ['61ECO2MIC','Kinh tế vi mô',3],
+    ['61ECO2MAC','Kinh tế vĩ mô',3],
+    ['61STA3BES','Thống kê ứng dụng trong kinh doanh và kinh tế',3],
+    ['61ACC2POA','Nguyên lý Kế toán',3],
+    ['61STA3ECO','Kinh tế lượng',3],
+  ],'coreGeneral'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MGT2ITM','Quản trị học',3],
+    ['61MGT2BUE','Đạo đức trong Kinh doanh',3],
+    ['61MKT2PMK','Nguyên lý Marketing',3],
+    ['61STA2RMB','Phương pháp nghiên cứu trong kinh doanh',3],
+    ['61LAW2BLW','Luật Kinh tế',3],
+    ['61MGT2SUS','Bền vững trong kinh doanh',3],
+  ],'electiveGeneral'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61FIN2FMA','Quản trị tài chính',3],
+    ['61FIN3CFI','Tài chính doanh nghiệp',3],
+    ['61FIN3IFI','Tài chính quốc tế',3],
+    ['61BNK3FMT','Lý thuyết tài chính tiền tệ',3],
+    ['61BNK3BMA','Quản trị ngân hàng',3],
+    ['61BNK4CLM','Đánh giá tín dụng và Quản trị cho vay',3],
+    ['61FIN4IPM','Quản trị danh mục đầu tư',3],
+  ],'coreMajor'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61FIN3FMO','Mô hình tài chính',3],
+    ['61FIN3FSY','Hệ thống tài chính',3],
+    ['61FIN4FSA','Phân tích báo cáo tài chính',3],
+    ['61FIN4FDI','Công cụ tài chính phái sinh',3],
+    ['61FIN4MEA','Mua bán & Sáp nhập',3],
+    ['61FIN4FSU','Huy động vốn khởi nghiệp',3],
+    ['61ACC2MAA','Kế toán quản trị',3],
+    ['61MGT4ENP','Khởi nghiệp',3],
+    ['61BNK4BRM','Quản trị rủi ro ngân hàng',3],
+    ['61BNK3TRM','Quản lý nguồn vốn',3],
+    ['61BNK4CRM','Quản trị rủi ro tín dụng',3],
+  ],'electiveMajor'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61FIN3FIP','Kế hoạch tài chính',3],
+    ['61FIN3AIN','Đầu tư phi truyền thống',3],
+    ['61FIN4CGO','Quản trị doanh nghiệp',3],
+    ['61BNK3BWM','Dịch vụ ngân hàng cá nhân và quản trị tài sản',3],
+  ],'electiveOther','Ngành Tài chính – Ngân hàng'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61ACC2FA1','Kế toán tài chính 1',3],
+    ['61ACC3TAX','Thuế',3],
+  ],'electiveOther','Ngành Kế toán'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MGT3HRM','Quản trị nhân sự',3],
+    ['61MGT3OBE','Hành vi tổ chức',3],
+    ['61MGT4SMT','Quản trị chiến lược',3],
+    ['61MGT3BCO','Giao tiếp trong kinh doanh',3],
+  ],'electiveOther','Ngành Quản trị Kinh doanh'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MKT2SEM','Marketing dịch vụ',3],
+    ['61MKT2DIM','Marketing kỹ thuật số',3],
+  ],'electiveOther','Ngành Marketing'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61GRA4CAP','Dự án Tốt nghiệp CAPSTONE',6],
+  ],'electiveOther','Dự án tốt nghiệp'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61GRA4INT','Thực tập tốt nghiệp',3],
+  ],'intern'));
+
+  MAJORS['tcnh'] = {
+    label:'Tài chính - Ngân hàng',
+    en:'Finance-Banking',
+    code:'7340201',
+    CATS, COURSES,
+    THESIS:{id:p+'_thesis',code:'61GRA4THE',name:'Khoá luận tốt nghiệp',credit:9}
+  };
+})();
+
+/* ---------------------------------------------------------------------
+   5) NGÀNH MARKETING
+--------------------------------------------------------------------- */
+(function(){
+  const p='mkt';
+  const CATS=[
+    {key:'foundation', label:'Foundation', target:69},
+    {key:'coreGeneral', label:'Core general', target:21},
+    {key:'electiveGeneral', label:'Elective general', target:6},
+    {key:'coreMajor', label:'Core major', target:21},
+    {key:'electiveMajor', label:'Elective major', target:15, targetThesis:12},
+    {key:'electiveOther', label:'Elective other', target:12, targetThesis:6},
+    {key:'intern', label:'Thực tập tốt nghiệp', target:3},
+  ];
+  let COURSES=[];
+  COURSES=COURSES.concat(foundationCoursesK23(p,'61',false));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MAT2CEB','Toán cao cấp và ứng dụng trong Kinh tế - Kinh doanh',3],
+    ['61STA2PAS','Xác suất và Thống kê',3],
+    ['61ECO2MIC','Kinh tế vi mô',3],
+    ['61ECO2MAC','Kinh tế vĩ mô',3],
+    ['61STA3BES','Thống kê ứng dụng trong kinh doanh và kinh tế',3],
+    ['61MKT2PMK','Nguyên lý Marketing',3],
+    ['61MGT2ITM','Quản trị học',3],
+  ],'coreGeneral'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61ACC2POA','Nguyên lý kế toán',3],
+    ['61FIN2FMA','Quản trị tài chính',3],
+    ['61MGT2BUE','Đạo đức kinh doanh',3],
+    ['61LAW2BLW','Luật Kinh tế',3],
+    ['61STA3ECO','Kinh tế lượng',3],
+    ['61STA2RMB','Phương pháp nghiên cứu trong Kinh doanh',3],
+    ['61MGT2SUS','Bền vững trong kinh doanh',3],
+  ],'electiveGeneral'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MKT3COB','Hành vi khách hàng',3],
+    ['61MKT4MRE','Nghiên cứu Marketing',3],
+    ['61MKT3IMC','Truyền thông Marketing tích hợp',3],
+    ['61MKT2SEM','Marketing dịch vụ',3],
+    ['61MKT4STM','Marketing Chiến lược',3],
+    ['61MKT2DIM','Marketing kỹ thuật số',3],
+    ['61MKT3ECI','Đạo đức và các vấn đề đương đại trong Marketing',3],
+  ],'coreMajor'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MKT3INM','Marketing quốc tế',3],
+    ['61MKT3BRA','Xây dựng và quản trị thương hiệu',3],
+    ['61MKT4B2B','Marketing tới khách hàng doanh nghiệp (B2B)',3],
+    ['61MKT3RSM','Bán lẻ và Quản trị bán hàng',3],
+    ['61MKT4MCM','Quản trị Chiến dịch Marketing và Sự kiện',3],
+    ['61MKT4SOM','Marketing Xã hội',3],
+    ['61MKT3CIM','Sáng tạo trong Marketing',3],
+    ['61MKT3PRE','Quan hệ công chúng',3],
+    ['61MKT3MAN','Phân tích dữ liệu Marketing',3],
+    ['61MKT3MFS','Marketing cho dịch vụ Tài chính',3],
+    ['61MGT4ENP','Khởi nghiệp',3],
+  ],'electiveMajor'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61FIN3FSY','Hệ thống tài chính',3],
+    ['61ACC2FA1','Kế toán tài chính 1',3],
+    ['61ACC2MAA','Kế toán quản trị',3],
+    ['61FIN3CFI','Tài chính doanh nghiệp',3],
+    ['61FIN4FSA','Phân tích báo cáo tài chính',3],
+  ],'electiveOther','Ngành Tài chính – Kế toán'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61THM2ITO','Nhập môn du lịch',3],
+    ['61THM3TMK','Marketing Du lịch',3],
+    ['61THM3HMG','Quản trị khách sạn',3],
+    ['61THM3TMG','Quản trị lữ hành',3],
+  ],'electiveOther','Ngành Quản trị DVDL và Lữ hành'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MGT3BCO','Giao tiếp trong kinh doanh',3],
+    ['61MGT4SMT','Quản trị chiến lược',3],
+    ['61MGT3HRM','Quản trị nhân sự',3],
+    ['61MGT3OBE','Hành vi tổ chức',3],
+    ['61MGT3IBM','Quản trị kinh doanh quốc tế',3],
+    ['61MGT3PRM','Quản trị dự án',3],
+  ],'electiveOther','Ngành Quản trị Kinh doanh'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61GRA4CAP','Dự án Tốt nghiệp CAPSTONE',6],
+  ],'electiveOther','Dự án tốt nghiệp'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61GRA4INT','Thực tập tốt nghiệp',3],
+  ],'intern'));
+
+  MAJORS['mkt'] = {
+    label:'Marketing',
+    en:'Marketing',
+    code:'7340115',
+    CATS, COURSES,
+    THESIS:{id:p+'_thesis',code:'61GRA4THE',name:'Khoá luận tốt nghiệp',credit:9}
+  };
+})();
+
+/* ---------------------------------------------------------------------
+   6) NGÀNH QUẢN TRỊ DỊCH VỤ DU LỊCH VÀ LỮ HÀNH – CHẤT LƯỢNG CAO
+--------------------------------------------------------------------- */
+(function(){
+  const p='dlclc';
+  const CATS=[
+    {key:'foundation', label:'Foundation', target:72},
+    {key:'coreGeneral', label:'Core general', target:21},
+    {key:'electiveGeneral', label:'Elective general', target:6},
+    {key:'coreMajor', label:'Core major', target:27},
+    {key:'electiveMajor', label:'Elective major', target:9, targetThesis:6},
+    {key:'electiveOther', label:'Elective other (bổ trợ)', target:6, targetThesis:0},
+    {key:'intern', label:'Thực tập / Khoá luận', target:9},
+  ];
+  let COURSES=[];
+  COURSES=COURSES.concat(foundationCoursesK23(p,'62',true));
+  COURSES=COURSES.concat(mk(p,[
+    ['62MAT2CEB','Toán cao cấp và ứng dụng trong Kinh tế - Kinh doanh',3],
+    ['62STA2PAS','Xác suất và Thống kê',3],
+    ['62ECO2MIC','Kinh tế vi mô',3],
+    ['62ECO2MAC','Kinh tế vĩ mô',3],
+    ['62MKT2PMK','Nguyên lý Marketing',3],
+    ['62MGT2ITM','Quản trị học',3],
+    ['62STA2RMB','Phương pháp nghiên cứu trong Kinh doanh',3],
+  ],'coreGeneral'));
+  COURSES=COURSES.concat(mk(p,[
+    ['62MGT2BUE','Đạo đức kinh doanh',3],
+    ['62ACC2ATH','Kế toán du lịch khách sạn',3],
+    ['62THM3TEC','Kinh tế Du lịch',3],
+    ['62MGT3BML','Mô hình kinh doanh',3],
+    ['62MGT2SUS','Bền vững trong kinh doanh',3],
+  ],'electiveGeneral'));
+  COURSES=COURSES.concat(mk(p,[
+    ['62THM2ITO','Nhập môn du lịch',3],
+    ['62THM3HMG','Quản trị khách sạn',3],
+    ['62THM3TMG','Quản trị lữ hành',3],
+    ['62THM3TMK','Marketing du lịch',3],
+    ['62THM3TOG','Địa lý du lịch',3],
+    ['62THM3SUT','Du lịch bền vững',3],
+    ['62THM2TOL','Pháp luật du lịch',3],
+    ['62THM4CAP','Dự án Capstone (CAPSTONE Project)',6],
+  ],'coreMajor'));
+  COURSES=COURSES.concat(mk(p,[
+    ['62THM4TOB','Hành vi khách du lịch',3],
+    ['62THM4DMK','Marketing điểm đến',3],
+    ['62THM4TPL','Quy hoạch du lịch',3],
+    ['62THM4ENT','Khởi nghiệp kinh doanh du lịch',3],
+    ['62THM3TPD','Phát triển sản phẩm du lịch',3],
+    ['62THM3OST','Học tập thực địa',3],
+    ['62THM3FBM','Quản trị nhà hàng',3],
+    ['62THM3CRS','Hệ thống đặt giữ chỗ',3],
+    ['62THM3DMT','Marketing kỹ thuật số trong Du lịch',3],
+    ['62THM3TPM','Quản trị dự án du lịch',3],
+    ['62THM3EVN','Quản trị sự kiện',3],
+    ['62MGT2HRM','Quản trị nhân sự',3],
+  ],'electiveMajor'));
+  COURSES=COURSES.concat(mk(p,[
+    ['62THM4TOP','Điều hành tour',3],
+    ['62THM3TRA','Quản lý vận chuyển',3],
+    ['62THM4TGS','Nghiệp vụ hướng dẫn du lịch',3],
+    ['62THM3SIT','Du lịch Chuyên đề',3],
+    ['62THM4HET','Du lịch di sản',3],
+    ['62THM4ITM','Các thị trường du lịch Quốc tế',3],
+    ['62THM4SQM','Quản lý chất lượng dịch vụ',3],
+    ['62THM4REV','Quản lý doanh số',3],
+    ['62THM4RDM','Quản trị Buồng phòng',3],
+    ['62THM4MIE','Du lịch M.I.C.E',3],
+    ['62THM4CMG','Quản trị Hội nghị',3],
+    ['62THM4WPL','Lập kế hoạch và tổ chức lễ cưới',3],
+  ],'electiveOther','Ngành Quản trị Du lịch'));
+  COURSES=COURSES.concat(mk(p,[
+    ['62MGT3BCO','Giao tiếp trong kinh doanh',3],
+    ['62MGT4SMT','Quản trị chiến lược',3],
+    ['62MGT3LEO','Lãnh đạo trong doanh nghiệp',3],
+    ['62MGT3OBE','Hành vi tổ chức',3],
+    ['62MGT3IBM','Quản trị kinh doanh quốc tế',3],
+    ['62MGT2IOM','Nhập môn vận trù học',3],
+  ],'electiveOther','Ngành Quản trị Kinh doanh'));
+  COURSES=COURSES.concat(mk(p,[
+    ['62MKT2SEM','Marketing Dịch vụ',3],
+    ['62MKT4MRE','Nghiên cứu Marketing',3],
+    ['62MKT2INM','Marketing Quốc tế',3],
+    ['62MKT2BRA','Xây dựng và quản trị thương hiệu',3],
+    ['62MKT4B2B','Marketing Khách hàng doanh nghiệp',3],
+    ['62THM3DMT','Marketing Kỹ thuật số trong Du lịch',3],
+  ],'electiveOther','Ngành Marketing'));
+  COURSES=COURSES.concat(mk(p,[
+    ['62GRA4INT','Thực tập tốt nghiệp',9],
+  ],'intern'));
+
+  MAJORS['dlclc'] = {
+    label:'Quản trị DVDL và Lữ hành – Chất lượng cao',
+    en:'Tourism and Travel Management (High Quality)',
+    code:'7810103-CLC',
+    CATS, COURSES,
+    THESIS:{id:p+'_thesis',code:'62GRA4THE',name:'Khoá luận tốt nghiệp',credit:9}
+  };
+})();
+
+YEARS['K23'] = {
+  label:'Khoá K23',
+  sub:'Chương trình khung K23, theo FMT Student Handbook 2024.',
+  order:['dl','dlclc','kt','qtkd','tcnh','mkt'],
+  MAJORS
+};
+})();
+
+/* =====================================================================
+   ================================ K24 ================================
+   ===================================================================== */
+(function(){
+const MAJORS = {};
+
+/* ---------------------------------------------------------------------
+   1) NGÀNH QUẢN TRỊ DỊCH VỤ DU LỊCH VÀ LỮ HÀNH
+--------------------------------------------------------------------- */
+(function(){
+  const p='dl';
+  const CATS=[
+    {key:'foundation', label:'Foundation', target:66},
+    {key:'coreGeneral', label:'Core general', target:21},
+    {key:'electiveGeneral', label:'Elective general', target:6},
+    {key:'coreMajor', label:'Core major', target:24},
+    {key:'electiveMajor', label:'Elective major', target:12, targetThesis:9},
+    {key:'electiveOther', label:'Elective other', target:12, targetThesis:6},
+    {key:'intern', label:'Thực tập tốt nghiệp', target:3},
+  ];
+  let COURSES=[];
+  COURSES=COURSES.concat(foundationCoursesK24(p,'61',{code:'61VIP2BHC',name:'Lược sử văn hoá Việt Nam',credit:3}));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MAT2CEB','Toán cao cấp và ứng dụng trong Kinh tế - Kinh doanh',3],
+    ['61STA2PAS','Xác suất thống kê',3],
+    ['61ECO2MIC','Kinh tế vi mô',3],
+    ['61ECO2MAC','Kinh tế vĩ mô',3],
+    ['61MGT2ITM','Quản trị học',3],
+    ['61MKT2PMK','Nguyên lý Marketing',3],
+    ['61THM2RMT','Phương pháp nghiên cứu trong kinh doanh',3],
+  ],'coreGeneral'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MGT2BUE','Đạo đức kinh doanh',3],
+    ['61MGT3BCO','Giao tiếp trong kinh doanh',3],
+    ['61THM3TEC','Kinh tế du lịch',3],
+    ['61MGT3BML','Mô hình kinh doanh',3],
+    ['61MGT3HRM','Quản trị nhân sự',3],
+  ],'electiveGeneral'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61THM2ITO','Nhập môn du lịch',3],
+    ['61THM3HMG','Quản trị khách sạn',3],
+    ['61THM3TMG','Quản trị lữ hành',3],
+    ['61THM3TMK','Marketing du lịch',3],
+    ['61THM3TOG','Địa lý du lịch',3],
+    ['61THM3SUT','Du lịch bền vững',3],
+    ['61THM2TOL','Pháp luật du lịch',3],
+    ['61ACC2ATH','Kế toán du lịch khách sạn',3],
+  ],'coreMajor'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61THM4TOB','Hành vi khách du lịch',3],
+    ['61THM3EVN','Quản trị sự kiện',3],
+    ['61THM4DMK','Marketing điểm đến',3],
+    ['61THM4TPL','Quy hoạch du lịch',3],
+    ['61THM4ENT','Khởi nghiệp kinh doanh du lịch',3],
+    ['61THM3TPD','Phát triển sản phẩm du lịch',3],
+    ['61THM3OST','Học tập thực địa',3],
+    ['61THM3FBM','Quản trị nhà hàng',3],
+    ['61THM3CRS','Hệ thống đặt giữ chỗ',3],
+    ['61THM3DMT','Marketing kỹ thuật số trong du lịch',3],
+    ['61THM3TPM','Quản trị dự án du lịch',3],
+  ],'electiveMajor'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61THM4TOP','Điều hành tour',3],
+    ['61THM4ITM','Các thị trường du lịch quốc tế',3],
+    ['61THM4TGS','Nghiệp vụ hướng dẫn du lịch',3],
+    ['61THM3SIT','Du lịch chuyên đề',3],
+    ['61THM4HET','Du lịch di sản',3],
+    ['61THM4REV','Quản lý doanh số',3],
+    ['61THM4RDM','Quản lý khối lưu trú',3],
+  ],'electiveOther','Ngành Quản trị DVDL và Lữ hành'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MGT3LEO','Lãnh đạo trong doanh nghiệp',3],
+    ['61MGT3IBM','Quản trị kinh doanh quốc tế',3],
+    ['61MGT3OBE','Hành vi tổ chức',3],
+    ['61MGT4SMT','Quản trị chiến lược',3],
+    ['61STA3BES','Thống kê ứng dụng trong kinh doanh và kinh tế',3],
+    ['61MGT3IOM','Nhập môn quản trị vận hành',3],
+  ],'electiveOther','Ngành Quản trị Kinh doanh'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MKT4MRE','Nghiên cứu Marketing',3],
+    ['61MKT3INM','Marketing quốc tế',3],
+    ['61MKT3BRA','Xây dựng và quản trị thương hiệu',3],
+    ['61MKT4B2B','Marketing tới khách hàng doanh nghiệp (B2B)',3],
+    ['61MKT3SOM','Marketing Xã hội',3],
+  ],'electiveOther','Ngành Marketing'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61GRA4CAP','Dự án Tốt nghiệp (Capstone Project)',6],
+  ],'electiveOther','Dự án tốt nghiệp'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61GRA4INT','Thực tập tốt nghiệp',3],
+  ],'intern'));
+
+  MAJORS['dl'] = {
+    label:'Quản trị Dịch vụ Du lịch và Lữ hành',
+    en:'Tourism and Travel Management',
+    code:'7810103',
+    CATS, COURSES,
+    THESIS:{id:p+'_thesis',code:'61GRA4THE',name:'Khoá luận tốt nghiệp',credit:9}
+  };
+})();
+
+/* ---------------------------------------------------------------------
+   2) NGÀNH KẾ TOÁN
+--------------------------------------------------------------------- */
+(function(){
+  const p='kt';
+  const CATS=[
+    {key:'foundation', label:'Foundation', target:63},
+    {key:'coreGeneral', label:'Core general', target:21},
+    {key:'electiveGeneral', label:'Elective general', target:6},
+    {key:'coreMajor', label:'Core major', target:27},
+    {key:'electiveMajor', label:'Elective major', target:9, targetThesis:6},
+    {key:'electiveOther', label:'Elective other', target:12, targetThesis:6},
+    {key:'intern', label:'Thực tập tốt nghiệp', target:3},
+  ];
+  let COURSES=[];
+  COURSES=COURSES.concat(foundationCoursesK24(p,'61',null));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MAT2CEB','Toán cao cấp và ứng dụng trong Kinh tế - Kinh doanh',3],
+    ['61STA2PAS','Xác suất thống kê',3],
+    ['61ECO2MIC','Kinh tế vi mô',3],
+    ['61ECO2MAC','Kinh tế vĩ mô',3],
+    ['61MGT2ITM','Quản trị học',3],
+    ['61FIN2FMA','Quản trị tài chính',3],
+    ['61LAW2BLW','Luật Kinh tế',3],
+  ],'coreGeneral'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61STA3BES','Thống kê ứng dụng trong kinh doanh và kinh tế',3],
+    ['61MGT2BUE','Đạo đức Kinh doanh',3],
+    ['61STA3ECO','Kinh tế lượng',3],
+    ['61BNK3FMT','Lý thuyết tài chính tiền tệ',3],
+    ['61MKT2PMK','Nguyên lý Marketing',3],
+    ['61STA2RMB','Phương pháp nghiên cứu trong Kinh doanh',3],
+    ['61MGT2SUS','Bền vững trong kinh doanh',3],
+  ],'electiveGeneral'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61ACC2POA','Nguyên lý kế toán',3],
+    ['61ACC2FA1','Kế toán tài chính 1',3],
+    ['61ACC3FA2','Kế toán tài chính 2',3],
+    ['61ACC2MAA','Kế toán quản trị',3],
+    ['61ACC3AUD','Kiểm toán và dịch vụ bảo đảm',3],
+    ['61FIN4FSA','Phân tích báo cáo tài chính',3],
+    ['61ACC4AFA','Kế toán tài chính nâng cao',3],
+    ['61ACC3VEA','Kế toán doanh nghiệp Việt Nam',3],
+    ['61ACC3TAX','Thuế',3],
+  ],'coreMajor'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61ACC2AMA','Kế toán quản trị nâng cao',3],
+    ['61ACC4AFS','Kiểm toán báo cáo tài chính',3],
+    ['61ACC3AIS','Hệ thống thông tin kế toán',3],
+    ['61ACC4BVA','Phân tích và định giá doanh nghiệp',3],
+    ['61ACC3DAA','Phân tích dữ liệu trong Kế toán',3],
+  ],'electiveMajor'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61ACC3APS','Kế toán công',3],
+    ['61ACC3IAC','Các vấn đề về kế toán đương đại',3],
+    ['61ACC4IAU','Các vấn đề về kiểm toán đương đại',3],
+    ['61ACC3MCS','Hệ thống kiểm soát quản trị',3],
+    ['61ACC4ASO','Kế toán máy',3],
+  ],'electiveOther','Ngành Kế toán'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61FIN3FMO','Mô hình tài chính',3],
+    ['61FIN3FSY','Hệ thống tài chính',3],
+    ['61FIN3IFI','Tài chính quốc tế',3],
+    ['61BNK3BMA','Quản trị ngân hàng',3],
+    ['61FIN3CFI','Tài chính doanh nghiệp',3],
+    ['61FIN3FIP','Kế hoạch tài chính',3],
+  ],'electiveOther','Ngành Tài chính – Ngân hàng'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MGT3HRM','Quản trị nhân sự',3],
+    ['61MGT3BCO','Giao tiếp trong kinh doanh',3],
+    ['61MGT3LEO','Lãnh đạo trong doanh nghiệp',3],
+    ['61MGT3IBM','Quản trị kinh doanh quốc tế',3],
+    ['61MGT3OBE','Hành vi tổ chức',3],
+    ['61MGT4ENP','Khởi nghiệp',3],
+  ],'electiveOther','Ngành Quản trị Kinh doanh'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MKT3BRA','Xây dựng và quản trị thương hiệu',3],
+    ['61MKT4B2B','Marketing tới khách hàng doanh nghiệp (B2B)',3],
+    ['61MKT3MFS','Marketing cho dịch vụ tài chính',3],
+  ],'electiveOther','Ngành Marketing'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61GRA4CAP','Dự án Tốt nghiệp CAPSTONE',6],
+    ['61GRA4IFR','Chuẩn mực báo cáo Tài chính Quốc tế (IFRS)',6],
+  ],'electiveOther','Dự án tốt nghiệp'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61GRA4INT','Thực tập tốt nghiệp',3],
+  ],'intern'));
+
+  MAJORS['kt'] = {
+    label:'Kế toán',
+    en:'Accounting',
+    code:'7340101',
+    CATS, COURSES,
+    THESIS:{id:p+'_thesis',code:'61GRA4THE',name:'Khoá luận tốt nghiệp',credit:9}
+  };
+})();
+
+/* ---------------------------------------------------------------------
+   3) NGÀNH QUẢN TRỊ KINH DOANH
+--------------------------------------------------------------------- */
+(function(){
+  const p='qtkd';
+  const CATS=[
+    {key:'foundation', label:'Foundation', target:63},
+    {key:'coreGeneral', label:'Core general', target:21},
+    {key:'electiveGeneral', label:'Elective general', target:6},
+    {key:'coreMajor', label:'Core major', target:21},
+    {key:'electiveMajor', label:'Elective major', target:15, targetThesis:12},
+    {key:'electiveOther', label:'Elective other', target:12, targetThesis:6},
+    {key:'intern', label:'Thực tập tốt nghiệp', target:3},
+  ];
+  let COURSES=[];
+  COURSES=COURSES.concat(foundationCoursesK24(p,'61',null));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MAT2CEB','Toán cao cấp và ứng dụng trong Kinh tế - Kinh doanh',3],
+    ['61STA2PAS','Xác suất thống kê',3],
+    ['61ECO2MIC','Kinh tế vi mô',3],
+    ['61ECO2MAC','Kinh tế vĩ mô',3],
+    ['61ACC2POA','Nguyên lý kế toán',3],
+    ['61FIN2FMA','Quản trị tài chính',3],
+    ['61MKT2PMK','Nguyên lý Marketing',3],
+  ],'coreGeneral'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61STA3BES','Thống kê ứng dụng trong kinh doanh và kinh tế',3],
+    ['61MGT2BUE','Đạo đức Kinh doanh',3],
+    ['61STA3ECO','Kinh tế lượng',3],
+    ['61LAW2BLW','Luật Kinh tế',3],
+    ['61STA2RMB','Phương pháp nghiên cứu trong Kinh doanh',3],
+    ['61MGT2SUS','Bền vững trong kinh doanh',3],
+  ],'electiveGeneral'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MGT2ITM','Quản trị học',3],
+    ['61MGT4SMT','Quản trị chiến lược',3],
+    ['61MGT3HRM','Quản trị nhân sự',3],
+    ['61MGT3OBE','Hành vi tổ chức',3],
+    ['61MGT3IBM','Quản trị kinh doanh quốc tế',3],
+    ['61MGT3IOM','Nhập môn vận trù học',3],
+    ['61MGT3BCO','Giao tiếp trong kinh doanh',3],
+  ],'coreMajor'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MGT3LEO','Lãnh đạo trong doanh nghiệp',3],
+    ['61MGT3SCM','Quản lý chuỗi cung ứng',3],
+    ['61MGT3MIS','Hệ thống thông tin quản lý',3],
+    ['61MGT4ENP','Khởi nghiệp',3],
+    ['61MGT3SHM','Quản trị nhân sự chiến lược',3],
+    ['61MGT3PRM','Quản trị dự án',3],
+    ['61FIN3CFI','Tài chính doanh nghiệp',3],
+    ['61MGT3BML','Mô hình kinh doanh',3],
+    ['61MGT3ORD','Thiết kế tổ chức',3],
+    ['61MGT4SEN','Khởi nghiệp xã hội',3],
+    ['61MGT3HRA','Phân tích nhân sự (HR Analytics)',3],
+  ],'electiveMajor'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61HRM3TAD','Đào tạo và phát triển nhân viên',3],
+    ['61HRM3CAB','Thù lao và phúc lợi',3],
+    ['61HRM3STA','Tuyển dụng',3],
+    ['61HRM3OLK','Quản trị kiến thức và tổ chức học tập',3],
+    ['61HRM3DMA','Quản trị sự đa dạng',3],
+    ['61HRM3IHR','Quản trị nhân sự quốc tế',3],
+    ['61HRM3QMT','Quản trị chất lượng',3],
+    ['61OPM3PRO','Thu mua',3],
+    ['61OPM3TLM','Hậu cần và vận chuyển',3],
+    ['61OPM3IMT','Quản lý hàng tồn kho',3],
+  ],'electiveOther','Ngành Quản trị Kinh doanh'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MKT2SEM','Marketing dịch vụ',3],
+    ['61MKT2DIM','Marketing kỹ thuật số',3],
+    ['61MKT3BRA','Xây dựng và quản trị thương hiệu',3],
+  ],'electiveOther','Ngành Marketing'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61ACC2FA1','Kế toán Tài chính 1',3],
+    ['61ACC2MAA','Kế toán Quản trị',3],
+    ['61ACC3VEA','Kế toán Doanh nghiệp Việt Nam',3],
+    ['61ACC4FSA','Phân tích Báo cáo tài chính',3],
+  ],'electiveOther','Ngành Kế toán'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61FIN3FMO','Mô hình tài chính',3],
+    ['61FIN3FSY','Hệ thống tài chính',3],
+    ['61FIN3IFI','Tài chính quốc tế',3],
+    ['61BNK3BMA','Quản trị ngân hàng',3],
+    ['61BNK3FMT','Lý thuyết tài chính tiền tệ',3],
+    ['61FIN3FIP','Kế hoạch tài chính',3],
+    ['61BNK4CLM','Đánh giá tín dụng và Quản trị cho vay',3],
+    ['61BNK3TRM','Quản lý nguồn vốn',3],
+  ],'electiveOther','Ngành Tài chính – Ngân hàng'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61THM2ITO','Nhập môn du lịch',3],
+    ['61THM3HMG','Quản trị khách sạn',3],
+    ['61THM3TMG','Quản trị lữ hành',3],
+    ['61THM3EVN','Quản trị sự kiện',3],
+    ['61THM3FBM','Quản trị nhà hàng',3],
+  ],'electiveOther','Ngành Quản trị DVDL và Lữ hành'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61GRA4CAP','Dự án Tốt nghiệp (Capstone Project)',6],
+  ],'electiveOther','Dự án tốt nghiệp'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61GRA4INT','Thực tập tốt nghiệp',3],
+  ],'intern'));
+
+  MAJORS['qtkd'] = {
+    label:'Quản trị Kinh doanh',
+    en:'Business Administration',
+    code:'7340101',
+    CATS, COURSES,
+    THESIS:{id:p+'_thesis',code:'61GRA4THE',name:'Khoá luận tốt nghiệp',credit:9}
+  };
+})();
+
+/* ---------------------------------------------------------------------
+   4) NGÀNH TÀI CHÍNH - NGÂN HÀNG
+--------------------------------------------------------------------- */
+(function(){
+  const p='tcnh';
+  const CATS=[
+    {key:'foundation', label:'Foundation', target:63},
+    {key:'coreGeneral', label:'Core general', target:21},
+    {key:'electiveGeneral', label:'Elective general', target:6},
+    {key:'coreMajor', label:'Core major', target:21},
+    {key:'electiveMajor', label:'Elective major', target:15, targetThesis:12},
+    {key:'electiveOther', label:'Elective other', target:12, targetThesis:6},
+    {key:'intern', label:'Thực tập tốt nghiệp', target:3},
+  ];
+  let COURSES=[];
+  COURSES=COURSES.concat(foundationCoursesK24(p,'61',null));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MAT2CEB','Toán cao cấp và ứng dụng trong Kinh tế - Kinh doanh',3],
+    ['61STA2PAS','Xác suất và Thống kê',3],
+    ['61ECO2MIC','Kinh tế vi mô',3],
+    ['61ECO2MAC','Kinh tế vĩ mô',3],
+    ['61STA3BES','Thống kê ứng dụng trong kinh doanh và kinh tế',3],
+    ['61ACC2POA','Nguyên lý Kế toán',3],
+    ['61STA3ECO','Kinh tế lượng',3],
+  ],'coreGeneral'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MGT2ITM','Quản trị học',3],
+    ['61MGT2BUE','Đạo đức trong Kinh doanh',3],
+    ['61MKT2PMK','Nguyên lý Marketing',3],
+    ['61STA2RMB','Phương pháp nghiên cứu trong kinh doanh',3],
+    ['61LAW2BLW','Luật Kinh tế',3],
+    ['61MGT2SUS','Bền vững trong kinh doanh',3],
+  ],'electiveGeneral'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61FIN2FMA','Quản trị tài chính',3],
+    ['61FIN3CFI','Tài chính doanh nghiệp',3],
+    ['61FIN3IFI','Tài chính quốc tế',3],
+    ['61BNK3FMT','Lý thuyết tài chính tiền tệ',3],
+    ['61BNK3BMA','Quản trị ngân hàng',3],
+    ['61BNK4CLM','Đánh giá tín dụng và Quản trị cho vay',3],
+    ['61FIN4IPM','Quản trị danh mục đầu tư',3],
+  ],'coreMajor'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61FIN3FMO','Mô hình tài chính',3],
+    ['61FIN3FSY','Hệ thống tài chính',3],
+    ['61BNK3TRM','Quản lý nguồn vốn',3],
+    ['61FIN4FSA','Phân tích báo cáo tài chính',3],
+    ['61FIN4FDI','Công cụ tài chính phái sinh',3],
+    ['61BNK4BRM','Quản trị rủi ro ngân hàng',3],
+    ['61BNK4CRM','Quản trị rủi ro tín dụng',3],
+    ['61FIN4MEA','Mua bán & Sáp nhập',3],
+    ['61MGT4ENP','Khởi nghiệp',3],
+    ['61ACC2MAA','Kế toán quản trị',3],
+    ['61ACC3AIS','Hệ thống thông tin kế toán',3],
+    ['61MGT3IBM','Quản trị kinh doanh quốc tế',3],
+    ['61MGT3IOM','Nhập môn quản trị vận hành',3],
+    ['61MGT3LEO','Lãnh đạo trong doanh nghiệp',3],
+    ['61MGT3MIS','Hệ thống thông tin quản lý',3],
+  ],'electiveMajor'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61FIN3FIP','Kế hoạch tài chính',3],
+    ['61FIN3AIN','Đầu tư phi truyền thống',3],
+    ['61FIN4CGO','Quản trị doanh nghiệp',3],
+    ['61BNK3BWM','Dịch vụ ngân hàng cá nhân và quản trị tài sản',3],
+  ],'electiveOther','Ngành Tài chính – Ngân hàng'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61ACC2FA1','Kế toán tài chính 1',3],
+    ['61ACC3TAX','Thuế',3],
+  ],'electiveOther','Ngành Kế toán'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MGT3HRM','Quản trị nhân sự',3],
+    ['61MGT3OBE','Hành vi tổ chức',3],
+    ['61MGT4SMT','Quản trị chiến lược',3],
+    ['61MGT3BCO','Giao tiếp trong kinh doanh',3],
+  ],'electiveOther','Ngành Quản trị Kinh doanh'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MKT3MFS','Marketing cho dịch vụ tài chính',3],
+    ['61MKT2SEM','Marketing dịch vụ',3],
+    ['61MKT2DIM','Marketing số',3],
+  ],'electiveOther','Ngành Marketing'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61GRA4CAP','Dự án Tốt nghiệp (Capstone Project)',6],
+  ],'electiveOther','Dự án tốt nghiệp'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61GRA4INT','Thực tập tốt nghiệp',3],
+  ],'intern'));
+
+  MAJORS['tcnh'] = {
+    label:'Tài chính - Ngân hàng',
+    en:'Finance-Banking',
+    code:'7340201',
+    CATS, COURSES,
+    THESIS:{id:p+'_thesis',code:'61GRA4THE',name:'Khoá luận tốt nghiệp',credit:9}
+  };
+})();
+
+/* ---------------------------------------------------------------------
+   5) NGÀNH MARKETING
+--------------------------------------------------------------------- */
+(function(){
+  const p='mkt';
+  const CATS=[
+    {key:'foundation', label:'Foundation', target:65},
+    {key:'coreGeneral', label:'Core general', target:21},
+    {key:'electiveGeneral', label:'Elective general', target:6},
+    {key:'coreMajor', label:'Core major', target:21},
+    {key:'electiveMajor', label:'Elective major', target:15, targetThesis:12},
+    {key:'electiveOther', label:'Elective other', target:12, targetThesis:6},
+    {key:'intern', label:'Thực tập tốt nghiệp', target:3},
+  ];
+  let COURSES=[];
+  COURSES=COURSES.concat(foundationCoursesK24(p,'61',{code:'61VIP1IVC',name:'Cơ sở Văn hoá Việt Nam',credit:2}));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MAT2CEB','Toán cao cấp và ứng dụng trong Kinh tế - Kinh doanh',3],
+    ['61STA2PAS','Xác suất và Thống kê',3],
+    ['61ECO2MIC','Kinh tế vi mô',3],
+    ['61ECO2MAC','Kinh tế vĩ mô',3],
+    ['61ACC2POA','Nguyên lý kế toán',3],
+    ['61MKT2PMK','Nguyên lý Marketing',3],
+    ['61MGT2ITM','Quản trị học',3],
+  ],'coreGeneral'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61STA3BES','Thống kê ứng dụng trong kinh doanh và kinh tế',3],
+    ['61FIN2FMA','Quản trị tài chính',3],
+    ['61MGT2BUE','Đạo đức kinh doanh',3],
+    ['61LAW2BLW','Luật Kinh tế',3],
+    ['61STA3ECO','Kinh tế lượng',3],
+    ['61MGT2SUS','Bền vững trong kinh doanh',3],
+  ],'electiveGeneral'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MKT4MRE','Nghiên cứu Marketing',3],
+    ['61MKT2SEM','Marketing dịch vụ',3],
+    ['61MKT3COB','Hành vi người tiêu dùng',3],
+    ['61MKT2DIM','Marketing Số',3],
+    ['61MKT3IMC','Truyền thông Marketing tích hợp',3],
+    ['61MKT3ECI','Đạo đức và các vấn đề đương đại trong Marketing',3],
+    ['61MKT4STM','Marketing Chiến lược',3],
+  ],'coreMajor'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MKT3INM','Marketing quốc tế',3],
+    ['61MKT3BRA','Xây dựng và quản trị thương hiệu',3],
+    ['61MKT4B2B','Marketing tới khách hàng doanh nghiệp (B2B)',3],
+    ['61MKT3IPD','Quản trị sáng kiến và Phát triển sản phẩm',3],
+    ['61MKT3EMM','Quản trị & Truyền thông Sự kiện',3],
+    ['61MKT4SOM','Marketing Xã hội',3],
+    ['61MKT3CIM','Sáng tạo trong Marketing',3],
+    ['61MKT3PRE','Quan hệ công chúng',3],
+    ['61MKT3MAN','Phân tích dữ liệu Marketing',3],
+    ['61MKT3MFS','Marketing cho dịch vụ Tài chính',3],
+    ['61MGT4ENP','Khởi nghiệp',3],
+  ],'electiveMajor'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61FIN3FSY','Hệ thống tài chính',3],
+    ['61ACC3VEA','Kế toán doanh nghiệp Việt Nam',3],
+    ['61ACC2MAA','Kế toán quản trị',3],
+    ['61ACC3TAX','Thuế',3],
+  ],'electiveOther','Ngành Tài chính – Kế toán'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61THM2ITO','Nhập môn du lịch',3],
+    ['61THM4DMK','Marketing điểm đến',3],
+    ['61THM3HMG','Quản trị khách sạn',3],
+    ['61THM3TMG','Quản trị lữ hành',3],
+    ['61THM3EVN','Quản trị sự kiện',3],
+    ['61THM3TPD','Phát triển sản phẩm du lịch',3],
+    ['61THM3TPM','Quản trị dự án du lịch',3],
+  ],'electiveOther','Ngành Quản trị DVDL và Lữ hành'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MGT3BCO','Giao tiếp trong kinh doanh',3],
+    ['61MGT4SMT','Quản trị chiến lược',3],
+    ['61MGT3HRM','Quản trị nhân sự',3],
+    ['61MGT3OBE','Hành vi tổ chức',3],
+    ['61MGT3IBM','Quản trị kinh doanh quốc tế',3],
+    ['61MGT3PRM','Quản trị dự án',3],
+  ],'electiveOther','Ngành Quản trị Kinh doanh'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61GRA4CAP','Dự án Tốt nghiệp (Capstone Project)',6],
+  ],'electiveOther','Dự án tốt nghiệp'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61GRA4INT','Thực tập tốt nghiệp',3],
+  ],'intern'));
+
+  MAJORS['mkt'] = {
+    label:'Marketing',
+    en:'Marketing',
+    code:'73400115',
+    CATS, COURSES,
+    THESIS:{id:p+'_thesis',code:'61GRA4THE',name:'Khoá luận tốt nghiệp',credit:9}
+  };
+})();
+
+/* ---------------------------------------------------------------------
+   6) NGÀNH QUẢN TRỊ DỊCH VỤ DU LỊCH VÀ LỮ HÀNH – TIÊN TIẾN
+--------------------------------------------------------------------- */
+(function(){
+  const p='dltt';
+  const CATS=[
+    {key:'foundation', label:'Foundation', target:66},
+    {key:'coreGeneral', label:'Core general', target:21},
+    {key:'electiveGeneral', label:'Elective general', target:3},
+    {key:'coreMajor', label:'Core major', target:30},
+    {key:'electiveMajor', label:'Elective major', target:6, targetThesis:3},
+    {key:'electiveOther', label:'Elective other (bổ trợ)', target:9, targetThesis:3},
+    {key:'intern', label:'Thực tập tại cơ sở', target:10},
+  ];
+  let COURSES=[];
+  COURSES=COURSES.concat(foundationCoursesK24(p,'66',{code:'66VIP2BHC',name:'Lược sử văn hoá Việt Nam',credit:3}));
+  COURSES=COURSES.concat(mk(p,[
+    ['66MAT2CEB','Toán cao cấp và ứng dụng trong Kinh tế - Kinh doanh',3],
+    ['66STA2PAS','Xác suất và Thống kê',3],
+    ['66ECO2MIC','Kinh tế vi mô',3],
+    ['66ECO2MAC','Kinh tế vĩ mô',3],
+    ['66MGT2ITM','Quản trị học',3],
+    ['66MKT2PMK','Nguyên lý Marketing',3],
+    ['66STA2RMT','Phương pháp nghiên cứu trong Kinh doanh',3],
+  ],'coreGeneral'));
+  COURSES=COURSES.concat(mk(p,[
+    ['66MGT2BUE','Đạo đức kinh doanh',3],
+    ['66MGT3BCO','Giao tiếp trong kinh doanh',3],
+    ['66THM3TEC','Kinh tế Du lịch',3],
+    ['66MGT3BML','Mô hình kinh doanh',3],
+    ['66MGT3HRM','Quản trị nhân sự',3],
+  ],'electiveGeneral'));
+  COURSES=COURSES.concat(mk(p,[
+    ['66THM2ITO','Nhập môn du lịch',3],
+    ['66THM3HMG','Quản trị khách sạn',3],
+    ['66THM3TMG','Quản trị lữ hành',3],
+    ['66THM3TMK','Marketing du lịch',3],
+    ['66THM3TOG','Địa lý du lịch',3],
+    ['66THM3SUT','Du lịch bền vững',3],
+    ['66THM4CAP','Dự án Capstone (CAPSTONE Project)',6],
+    ['66THM4ENT','Khởi nghiệp kinh doanh du lịch',3],
+    ['66ACC2ATH','Kế toán du lịch khách sạn',3],
+  ],'coreMajor'));
+  COURSES=COURSES.concat(mk(p,[
+    ['66THM4TOB','Hành vi khách du lịch',3],
+    ['66THM4DMK','Marketing điểm đến',3],
+    ['66THM2TOL','Pháp luật du lịch',3],
+    ['66THM3TPD','Phát triển sản phẩm du lịch',3],
+    ['66THM3OST','Học tập thực địa',3],
+    ['66THM3FBM','Quản trị nhà hàng',3],
+    ['66THM3CRS','Hệ thống đặt giữ chỗ',3],
+    ['66THM3DMT','Marketing kỹ thuật số trong Du lịch',3],
+    ['66THM3TPM','Quản trị dự án du lịch',3],
+    ['66THM3EVN','Quản trị sự kiện',3],
+  ],'electiveMajor'));
+  COURSES=COURSES.concat(mk(p,[
+    ['66THM4TOP','Điều hành tour',3],
+    ['66THM4TGS','Nghiệp vụ hướng dẫn du lịch',3],
+    ['66THM3SIT','Du lịch Chuyên đề',3],
+    ['66THM4ITM','Các thị trường du lịch Quốc tế',3],
+    ['66THM4HET','Du lịch di sản',3],
+    ['66THM4REV','Quản lý doanh số',3],
+    ['66THM4RDM','Quản lý khối lưu trú',3],
+    ['66THM4CMG','Quản trị hội nghị',3],
+  ],'electiveOther','Ngành Quản trị Du lịch và Lữ hành'));
+  COURSES=COURSES.concat(mk(p,[
+    ['66MGT3LEO','Lãnh đạo trong doanh nghiệp',3],
+    ['66MGT3IBM','Quản trị kinh doanh quốc tế',3],
+    ['66MGT3OBE','Hành vi tổ chức',3],
+    ['66MGT4SMT','Quản trị chiến lược',3],
+    ['66MGT3IOM','Nhập môn quản trị vận hành',3],
+  ],'electiveOther','Ngành Quản trị Kinh doanh'));
+  COURSES=COURSES.concat(mk(p,[
+    ['66MKT2SEM','Marketing Dịch vụ',3],
+    ['66MKT4MRE','Nghiên cứu Marketing',3],
+    ['66MKT2INM','Marketing Quốc tế',3],
+    ['66MKT2BRA','Xây dựng và quản trị thương hiệu',3],
+    ['66MKT4B2B','Marketing tới khách hàng doanh nghiệp (B2B)',3],
+    ['66THM3SOM','Marketing Xã hội',3],
+  ],'electiveOther','Ngành Marketing'));
+  COURSES=COURSES.concat(mk(p,[
+    ['66GRA4INT','Thực tập tốt nghiệp',10],
+  ],'intern'));
+
+  MAJORS['dltt'] = {
+    label:'Quản trị DVDL và Lữ hành – Tiên tiến',
+    en:'Tourism and Travel Management (Advanced)',
+    code:'7810103TT',
+    CATS, COURSES,
+    THESIS:{id:p+'_thesis',code:'66GRA4THE',name:'Khoá luận tốt nghiệp',credit:9}
+  };
+})();
+
+/* ---------------------------------------------------------------------
+   7) NGÀNH CÔNG NGHỆ TÀI CHÍNH
+--------------------------------------------------------------------- */
+(function(){
+  const p='cntc';
+  const CATS=[
+    {key:'foundation', label:'Foundation', target:63},
+    {key:'coreGeneral', label:'Core general', target:21},
+    {key:'electiveGeneral', label:'Elective general', target:9},
+    {key:'coreMajor', label:'Core major', target:21},
+    {key:'electiveMajor', label:'Elective major', target:12, targetThesis:9},
+    {key:'electiveOther', label:'Elective other', target:12, targetThesis:6},
+    {key:'intern', label:'Thực tập tốt nghiệp', target:3},
+  ];
+  let COURSES=[];
+  COURSES=COURSES.concat(foundationCoursesK24(p,'61',null));
+  COURSES=COURSES.concat(mk(p,[
+    ['61MAT2CEB','Toán cao cấp và ứng dụng trong Kinh tế - Kinh doanh',3],
+    ['61STA2PAS','Xác suất và Thống kê',3],
+    ['61ECO2BUE','Kinh tế trong kinh doanh',3],
+    ['61FIN2FMA','Quản trị tài chính',3],
+    ['61MKT2PMK','Nguyên lý Marketing',3],
+    ['61ACC2POA','Nguyên lý Kế toán',3],
+    ['61FIN2PYP','Lập trình Python',3],
+  ],'coreGeneral'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61FIN2DAT','Cơ sở dữ liệu',3],
+    ['61MGT2ITM','Quản trị học',3],
+    ['61MGT2BUE','Đạo đức Kinh doanh',3],
+    ['61STA2RMB','Phương pháp nghiên cứu trong kinh doanh',3],
+    ['61BNK3FMT','Lý thuyết Tài chính tiền tệ',3],
+    ['61LAW2BLW','Luật Kinh tế',3],
+    ['61MKT2SEM','Marketing dịch vụ',3],
+  ],'electiveGeneral'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61BNK3BMA','Quản trị ngân hàng',3],
+    ['61STA3ECO','Kinh tế lượng',3],
+    ['61FIN3FBC','Nguyên lý cơ bản trong Fintech và Blockchain',3],
+    ['61FIN4IPM','Quản trị danh mục đầu tư',3],
+    ['61FIN4CFA','Khai thác và phân tích dữ liệu tài chính',3],
+    ['61MKT2DIM','Marketing kỹ thuật số',3],
+    ['61MGT3ENF','Khởi nghiệp trong lĩnh vực FinTech',3],
+  ],'coreMajor'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61FIN3FMO','Mô hình tài chính',3],
+    ['61FIN3RIS','Quản trị rủi ro',3],
+    ['61FIN4BFA','Phân tích dữ liệu & dự báo trong kinh doanh',3],
+    ['61FIN3CFI','Tài chính doanh nghiệp',3],
+    ['61FIN3FSU','Huy động vốn khởi nghiệp',3],
+    ['61MKT3MFS','Marketing cho dịch vụ tài chính',3],
+    ['61MKT3COB','Hành vi người tiêu dùng',3],
+    ['61STA4ADA','Phân tích dữ liệu nâng cao',3],
+    ['61STA3BES','Thống kê ứng dụng trong kinh doanh và kinh tế',3],
+    ['61FIN3AIM','Trí tuệ nhân tạo và học máy',3],
+    ['61FIN4BDM','Quản trị dữ liệu lớn',3],
+  ],'electiveMajor'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61FIN3FIP','Kế hoạch tài chính cá nhân',3],
+    ['61FIN3FSY','Hệ thống tài chính',3],
+    ['61FIN4DIF','Đổi mới công nghệ số trong tài chính',3],
+    ['61FIN4FDI','Công cụ tài chính phái sinh',3],
+    ['61BNK4BRM','Quản trị rủi ro ngân hàng',3],
+    ['61STA4BSC','Tính toán và thống kê Bayesian',3],
+    ['61FIN4CYS','An toàn thông tin số',3],
+    ['61FIN4PYF','Ứng dụng Python/R trong tài chính',3],
+    ['61FIN4MLA','Học máy và ứng dụng',3],
+    ['61MGT3BCO','Giao tiếp trong kinh doanh',3],
+    ['61MGT4SMT','Quản trị chiến lược',3],
+    ['61MGT3SCM','Quản trị chuỗi cung ứng',3],
+    ['61MKT3BRA','Xây dựng và quản trị thương hiệu',3],
+    ['61MKT4B2B','Marketing tới khách hàng doanh nghiệp (B2B)',3],
+  ],'electiveOther','Học phần bổ trợ'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61GRA4CAP','Dự án Tốt nghiệp (Capstone Project)',6],
+  ],'electiveOther','Dự án tốt nghiệp'));
+  COURSES=COURSES.concat(mk(p,[
+    ['61GRA4INT','Thực tập tốt nghiệp',3],
+  ],'intern'));
+
+  MAJORS['cntc'] = {
+    label:'Công nghệ Tài chính',
+    en:'Financial Technology - Fintech',
+    code:'7340205',
+    CATS, COURSES,
+    THESIS:{id:p+'_thesis',code:'61GRA4THE',name:'Khoá luận tốt nghiệp',credit:9}
+  };
+})();
+
+YEARS['K24'] = {
+  label:'Khoá K24',
+  sub:'Chương trình khung K24, theo FMT Student Handbook 2025.',
+  order:['dl','dltt','kt','qtkd','tcnh','mkt','cntc'],
+  MAJORS
+};
+})();
+
+/* ======================================================================
+   ROUTING + APP LOGIC
+   ====================================================================== */
+
+const YEAR_ORDER = ['K23','K24'];
+
+let currentYearKey = YEAR_ORDER[0];
+let currentMajorKey = null;
+let state = {checked:{}, manual:{}, thesis:false};
+
+/* ---------- screen helpers ---------- */
+function showScreen(id){
+  ['landingScreen','calcScreen'].forEach(s=>{
+    document.getElementById(s).classList.toggle('hidden', s!==id);
+  });
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ---------- combined landing screen: year tabs + major grid ---------- */
+function renderYearTabs(){
+  const wrap = document.getElementById('yearTabs');
+  wrap.innerHTML = '';
+  YEAR_ORDER.forEach(yk=>{
+    const y = YEARS[yk];
+    const btn = document.createElement('button');
+    btn.className = 'year-tab' + (yk===currentYearKey ? ' active' : '');
+    btn.innerHTML = `<span class="yt-label">${y.label}</span>${y.order.length} ngành`;
+    btn.addEventListener('click', ()=>selectYearTab(yk));
+    wrap.appendChild(btn);
+  });
+  document.getElementById('landingSub').textContent = YEARS[currentYearKey].sub;
+}
+
+async function selectYearTab(yk){
+  if(yk === currentYearKey) return;
+  currentYearKey = yk;
+  try{ if(window.storage) await window.storage.set('selectedYear', yk, false); }catch(err){}
+  renderYearTabs();
+  renderLanding();
+}
+
+function renderLanding(){
+  const grid = document.getElementById('majorGrid');
+  grid.innerHTML = '';
+  const y = YEARS[currentYearKey];
+  y.order.forEach((key,i)=>{
+    const m = y.MAJORS[key];
+    const totalTarget = m.CATS.reduce((s,c)=>s+c.target,0);
+    const card = document.createElement('button');
+    card.className = 'major-card';
+    card.innerHTML = `
+      <span class="m-idx">${String(i+1).padStart(2,'0')} · ${m.code}</span>
+      <span class="m-title">${m.label}</span>
+      <span class="m-en">${m.en}</span>
+      <span class="m-meta"><span>Tổng tín chỉ</span><span>${totalTarget}</span></span>
+    `;
+    card.addEventListener('click', ()=>selectMajor(key));
+    grid.appendChild(card);
+  });
+}
+
+async function selectMajor(key){
+  currentMajorKey = key;
+  try{
+    if(window.storage){
+      await window.storage.set('selectedYear', currentYearKey, false);
+      await window.storage.set('selectedMajor:'+currentYearKey, key, false);
+    }
+  }catch(err){}
+  const m = YEARS[currentYearKey].MAJORS[key];
+  document.getElementById('calcEyebrow').textContent = 'HANU · ' + YEARS[currentYearKey].label + ' · Ngành ' + m.label;
+  document.getElementById('calcTitle').textContent = 'Máy tính tín chỉ';
+  state = {checked:{}, manual:{}, thesis:false};
+  showScreen('calcScreen');
+  await loadProgress();
+}
+
+function backToLanding(){
+  currentMajorKey = null;
+  renderYearTabs();
+  renderLanding();
+  showScreen('landingScreen');
+}
+
+/* ---------- calculator logic (per selected year + major) ---------- */
+function curMajor(){ return YEARS[currentYearKey].MAJORS[currentMajorKey]; }
+
+function catTarget(catKey){
+  const m = curMajor();
+  const cat = m.CATS.find(c=>c.key===catKey);
+  if(state.thesis && cat.targetThesis !== undefined) return cat.targetThesis;
+  return cat.target;
+}
+function catEarned(catKey){
+  if(state.manual[catKey] !== undefined && state.manual[catKey] !== null && state.manual[catKey] !== ''){
+    return Number(state.manual[catKey]) || 0;
+  }
+  const m = curMajor();
+  return m.COURSES.filter(c=>c.cat===catKey && state.checked[c.id]).reduce((s,c)=>s+c.credit,0);
+}
+
+function render(){
+  const m = curMajor();
+  const container = document.getElementById('catsContainer');
+  container.innerHTML = '';
+  let totalTarget = 0, totalEarnedCapped = 0;
+
+  m.CATS.forEach((cat, i)=>{
+    const target = catTarget(cat.key);
+    const earned = catEarned(cat.key);
+    const remaining = Math.max(0, target - earned);
+    const capped = Math.min(earned, target);
+    totalTarget += target;
+    totalEarnedCapped += capped;
+    const pct = target ? Math.min(100, (earned/target)*100) : 100;
+    const done = earned >= target && target>0;
+
+    const el = document.createElement('div');
+    el.className = 'cat cat-' + cat.key + (done ? ' done' : '') + (cat.collapsed ? ' collapsed' : '');
+
+    let noteText = cat.note || '';
+    if(!noteText && (cat.key==='electiveGeneral' || cat.key==='electiveMajor') && target%3===0 && target>0){
+      noteText = `Chọn tối thiểu ${target/3} môn`;
+    }
+
+    let bodyHtml = `<div class="override">
+        <i class="lbl">Số tín quy đổi thủ công (nếu có)</i>
+        <input type="number" min="0" placeholder="—" value="${state.manual[cat.key] ?? ''}" data-manual="${cat.key}">
+      </div>`;
+
+    let lastGroup = null;
+    m.COURSES.filter(c=>c.cat===cat.key).forEach(c=>{
+      if(c.group && c.group !== lastGroup){
+        bodyHtml += `<div class="subgroup-label">${c.group}</div>`;
+        lastGroup = c.group;
+      }
+      const isChecked = !!state.checked[c.id];
+      bodyHtml += `<label class="course-row${isChecked?' checked':''}">
+        <input type="checkbox" data-course="${c.id}" ${isChecked?'checked':''}>
+        <span class="code">${c.code}</span>
+        <span class="name">${c.name}</span>
+        <span class="cr">${c.credit} tín</span>
+      </label>`;
+    });
+
+    el.innerHTML = `
+      <div class="cat-head" data-toggle="${cat.key}">
+        <span class="idx">${String(i+1).padStart(2,'0')}</span>
+        <span class="title">${cat.label}${noteText?`<span class="target-note">${noteText}</span>`:''}</span>
+        <span class="credits">${earned}/${target}<span class="rem">${remaining>0?`còn ${remaining} tín`:'đủ tín'}</span></span>
+        <span class="chev">▾</span>
+      </div>
+      <div class="cat-head-bar"><div class="fill" style="width:${pct}%"></div></div>
+      <div class="cat-body">${bodyHtml}</div>
+    `;
+    container.appendChild(el);
+  });
+
+  // thesis block
+  const thesis = m.THESIS;
+  const thesisEl = document.createElement('div');
+  thesisEl.className = 'thesis-block';
+  const otherCat = m.CATS.find(c=>c.key==='electiveOther');
+  const majorCat = m.CATS.find(c=>c.key==='electiveMajor');
+  const noteParts = [];
+  if(majorCat && majorCat.targetThesis !== undefined){
+    noteParts.push(`chỉ tiêu "${majorCat.label}" giảm còn ${majorCat.targetThesis} tín thay vì ${majorCat.target}`);
+  }
+  if(otherCat && otherCat.targetThesis !== undefined){
+    noteParts.push(`chỉ tiêu "${otherCat.label}" giảm còn ${otherCat.targetThesis} tín thay vì ${otherCat.target}`);
+  }
+  const reducedNote = noteParts.length ? `Nếu chọn làm khoá luận, ${noteParts.join('; và ')}.` : '';
+  thesisEl.innerHTML = `
+    <label class="th-head">
+      <input type="checkbox" id="thesisCheck" ${state.thesis?'checked':''}>
+      ${thesis.name} (tự chọn, ${thesis.credit} tín)
+    </label>
+    <p>${reducedNote} Khoá luận không tính vào tổng tín chỉ chính bên dưới, mà cộng thêm song song.</p>
+  `;
+  container.appendChild(thesisEl);
+
+  // mini list
+  const mini = document.getElementById('miniList');
+  mini.innerHTML = '<h3>Theo nhóm</h3>';
+  m.CATS.forEach(cat=>{
+    const target = catTarget(cat.key);
+    const earned = catEarned(cat.key);
+    const pct = target ? Math.min(100, (earned/target)*100) : 100;
+    const row = document.createElement('div');
+    row.className = 'mini-row cat-' + cat.key + (earned>=target && target>0 ?' done':'');
+    row.dataset.jump = cat.key;
+    row.innerHTML = `<span class="name">${cat.label}</span><span class="bar-bg"><span class="bar-fill" style="width:${pct}%"></span></span><span class="figs">${earned}/${target}</span>`;
+    mini.appendChild(row);
+  });
+
+  // seal
+  const totalLeft = Math.max(0, totalTarget - totalEarnedCapped);
+  const overallPct = totalTarget ? Math.round((totalEarnedCapped/totalTarget)*100) : 0;
+  document.getElementById('sealPct').textContent = overallPct + '%';
+  document.getElementById('figEarned').textContent = totalEarnedCapped;
+  document.getElementById('figTarget').textContent = totalTarget;
+  document.getElementById('figLeft').textContent = totalLeft;
+  const ring = document.getElementById('sealRing');
+  const circumference = 2 * Math.PI * 52;
+  ring.setAttribute('stroke-dasharray', circumference);
+  ring.setAttribute('stroke-dashoffset', circumference * (1 - overallPct/100));
+
+  bindEvents();
+}
+
+function bindEvents(){
+  document.querySelectorAll('[data-course]').forEach(inp=>{
+    inp.addEventListener('change', e=>{
+      const id = e.target.dataset.course;
+      state.checked[id] = e.target.checked;
+      saveProgress();
+      render();
+    });
+  });
+  document.querySelectorAll('[data-manual]').forEach(inp=>{
+    inp.addEventListener('input', e=>{
+      const key = e.target.dataset.manual;
+      state.manual[key] = e.target.value;
+      saveProgress();
+      render();
+    });
+  });
+  document.querySelectorAll('[data-toggle]').forEach(head=>{
+    head.addEventListener('click', e=>{
+      const key = e.currentTarget.dataset.toggle;
+      const cat = curMajor().CATS.find(c=>c.key===key);
+      cat.collapsed = !cat.collapsed;
+      render();
+    });
+  });
+  document.querySelectorAll('[data-jump]').forEach(row=>{
+    row.addEventListener('click', e=>{
+      const key = e.currentTarget.dataset.jump;
+      const cat = curMajor().CATS.find(c=>c.key===key);
+      cat.collapsed = false;
+      render();
+      setTimeout(()=>{
+        const target = document.querySelector(`[data-toggle="${key}"]`);
+        if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+      }, 30);
+    });
+  });
+  const thesisCheck = document.getElementById('thesisCheck');
+  if(thesisCheck){
+    thesisCheck.addEventListener('change', e=>{
+      state.thesis = e.target.checked;
+      saveProgress();
+      render();
+    });
+  }
+}
+
+function progressKey(){
+  return 'progress:'+currentYearKey+':'+currentMajorKey;
+}
+
+async function saveProgress(){
+  try{
+    if(window.storage && currentMajorKey){
+      await window.storage.set(progressKey(), JSON.stringify(state), false);
+    }
+  }catch(err){
+    console.error('Storage error', err);
+  }
+}
+
+async function loadProgress(){
+  try{
+    if(window.storage && currentMajorKey){
+      const res = await window.storage.get(progressKey(), false);
+      if(res && res.value){
+        const parsed = JSON.parse(res.value);
+        state.checked = parsed.checked || {};
+        state.manual = parsed.manual || {};
+        state.thesis = !!parsed.thesis;
+      }
+    }
+  }catch(err){
+    console.log('Chưa có tiến độ lưu cho ngành này');
+  }
+  render();
+}
+
+document.getElementById('backToLandingBtn').addEventListener('click', backToLanding);
+
+document.getElementById('resetBtn').addEventListener('click', async ()=>{
+  if(!confirm('Xoá toàn bộ tiến độ đã lưu cho ngành này?')) return;
+  state = {checked:{}, manual:{}, thesis:false};
+  try{
+    if(window.storage && currentMajorKey) await window.storage.delete(progressKey(), false);
+  }catch(err){}
+  render();
+});
+
+/* ---------- init ---------- */
+async function init(){
+  try{
+    if(window.storage){
+      const yRes = await window.storage.get('selectedYear', false);
+      if(yRes && yRes.value && YEARS[yRes.value]){
+        currentYearKey = yRes.value;
+      }
+    }
+  }catch(err){
+    // chưa từng chọn khoá — dùng khoá mặc định
+  }
+  renderYearTabs();
+  renderLanding();
+  try{
+    if(window.storage){
+      const mRes = await window.storage.get('selectedMajor:'+currentYearKey, false);
+      if(mRes && mRes.value && YEARS[currentYearKey].MAJORS[mRes.value]){
+        await selectMajor(mRes.value);
+        return;
+      }
+    }
+  }catch(err){
+    // chưa từng chọn ngành cho khoá này — ở lại màn hình chọn ngành
+  }
+  showScreen('landingScreen');
+}
+init();
+</script>
+</body>
+</html>
