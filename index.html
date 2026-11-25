@@ -606,6 +606,47 @@
 </div>
 
 <script>
+/* Lưu tiến độ trên trình duyệt thật: nếu chưa có window.storage thì dùng localStorage */
+(function(){
+  if (window.storage) return;
+  var PREFIX = 'fmtcredit:';
+  var mem = {};
+  function ls(){
+    try{ var t='__t'; window.localStorage.setItem(t,'1'); window.localStorage.removeItem(t); return window.localStorage; }
+    catch(e){ return null; }
+  }
+  var store = ls();
+  window.storage = {
+    async get(key){
+      var v = store ? store.getItem(PREFIX+key) : (key in mem ? mem[key] : null);
+      if (v === null || v === undefined) throw new Error('Key not found');
+      return { key: key, value: v, shared: false };
+    },
+    async set(key, value){
+      value = String(value);
+      if (store) store.setItem(PREFIX+key, value); else mem[key] = value;
+      return { key: key, value: value, shared: false };
+    },
+    async delete(key){
+      if (store) store.removeItem(PREFIX+key); else delete mem[key];
+      return { key: key, deleted: true, shared: false };
+    },
+    async list(prefix){
+      var keys = [];
+      if (store){
+        for (var i=0;i<store.length;i++){
+          var k = store.key(i);
+          if (k.indexOf(PREFIX)===0){ k = k.slice(PREFIX.length); if(!prefix || k.indexOf(prefix)===0) keys.push(k); }
+        }
+      } else {
+        Object.keys(mem).forEach(function(k){ if(!prefix || k.indexOf(prefix)===0) keys.push(k); });
+      }
+      return { keys: keys, prefix: prefix, shared: false };
+    }
+  };
+})();
+</script>
+<script>
 /* ======================================================================
    DỮ LIỆU CHƯƠNG TRÌNH KHUNG — Khoa FMT, HANU
    K23: theo FMT Student Handbook 2024
